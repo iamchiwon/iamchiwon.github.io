@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2017/07/05/fp_rx/"><span>함수형 프로그래밍과 Rx</span></a></h3>
+    <h3 class="article-title"><a href="/2017/07/11/do_mvc/"><span>튜닝의 끝은 순정 - MVC를 쓰자</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2017/07/05/fp_rx/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-07-05T05:13:00.000Z">
-          2017-07-05
+      <a href="/2017/07/11/do_mvc/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-07-10T15:00:00.000Z">
+          2017-07-11
         </time>
       </a>
     </span>
@@ -103,12 +103,18 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>얼마전 지인들 간의 모임에서 함수형 프로그래밍에 대해 했던 얘기를 정리한 것이다.<br>대화 중에 이 내용을 글로 써야겠다 싶었는데, 귀찮아서 미루다가 거의 한달쯤 지나서야 쓰고 있다.<br>우린 Rx 를 얘기하고 있었다. 근데 FP(Function Programming)과 혼재되어 말하면서 대화가 꼬이기 시작했다. 이 시점에서 함수형 프로그램(FP)과 반응형 프로그래밍(Rx) 을 정리할 필요가 있다.<br>사실 둘은 전혀 상관이 없다.</p>
-<h3 id="Functional-Programming"><a href="#Functional-Programming" class="headerlink" title="Functional Programming"></a>Functional Programming</h3><p>함수형 프로그래밍은 익히 여러 군데서 주워들은대로 오래 전부터 있던 개념이었다. 하지만 시대적 요구가 OOP를 선택했다. 그리고 요즘 다시 FP가 대두 되는 것은 역시 시대적 요구 때문이다.<br>멀티 코어와 멀티 쓰레드로 동시성 프로그래밍이 필요해 지면서 OOP로는 한계가 드러났다.<br>병렬로 로직이 수행되도 문제가 없으려면 처리하려는 데이터가 처리 도중에 외부에 의해서 변형되면 안되니까 immutable이 도입됐고, 로직 수행 중에 외부의 영향을 받지 않도록 조건을 걸다 보니 pure function이 되었다. 그러고 나니 그 오래 전에 하던 FP가 제시하던 것과 동일하게 됐고, 결국 FP가 다시 주목받기 시작했다.</p>
-<p>여기서 Pure Function 이란 파라미터로 주어진 값 외에 다른 값을 참조하거나 리턴값 외에 다른 값을 변경하지 않는 코드 덩어리 이다. 이를 “Side Effect 가 없다” 라고 한다. 이를 강조하고 실수를 막기 위해서 사용되는 자료형들은 immutable 들이 되어야 했다.</p>
-<p>함수형 프로그래밍은 이 개념을 지키면 어떤 언어로든 가능하다. 하지만 함수형 언어를 구분하는 것은 함수를 어떻게 취급하느냐에 따라 나뉜다. 함수형 언어는 함수를 변수 또는 리스트에 넣거나 파라미터로 전달하거나 리턴값으로 사용할 수 있다. 함수를 이렇게 처리할 수 있으면 함수형 언어다. 이 관점에서 Java 8이 FP를 도입했다고는 하나 함수형 언어가 아니다. (함수 자체를 취급하지 않고 함수가 담긴 객체를 취급하니까)</p>
-<h3 id="Reactive-Programming"><a href="#Reactive-Programming" class="headerlink" title="Reactive Programming"></a>Reactive Programming</h3><p>반응형 프로그래밍은 말 그대로 반응에 의해 동작하는 프로그래밍 기법이다. 모든것을 통제하는 절차적 방식이 아니라 변수간, 로직간, 서로간에 조건을 작성해 두고 변화가 일어날 때 조건에 의해서 동작하는 방식으로 프로그래밍 하는 것이다. 이 개념이 도입된 많은 프레임워크나 라이브러리들이 있지만 요즘에는 단연 Rx 가 인기다. 그게 뭔지는 다른 여러곳에 자료가 많으니 굳이 말할 필요 없다.</p>
-<p>결론은 함수형 프로그래밍과 반응형 프로그래밍은 서로 다른것이다. Rx 에서 함수형의 그것처럼 처리되는 일부 문법적인 표현이 있다고 해서 서로 헷갈리거나 비슷하게 인식해서는 안되겠다.</p>
+        <p>기술을 이해하려면 그 기술 히스토리(문제점과 해결책)를 알면 명확해 진다.</p>
+<p>전통의(?) MVC 부터 MVP, MVVM, CLEAN ARCHITECTURE, VIPER, … 등등 아키텍쳐 종류가 매우 많다. 인터넷에 찾아보면 뭐가 다르고 뭐가 좋다 하는 글들을 많이 볼 수 있다. 내가 볼 때는 다 거기서 거기였다. 그리고 최근 내가 선택한 것은 결국 MVC 였다.</p>
+<h3 id="MVC이전"><a href="#MVC이전" class="headerlink" title="MVC이전"></a>MVC이전</h3><p>GUI있기 전에 프로그램은 콘솔에서 동작했다. 데이터를 읽고, 처리하는 과정에서 print로 콘솔 로그를 출력했다. 혼재되는 출력을 구분하기 위해  stdout, stderr, stddev 로 구분했다. 개발자들 끼리만 보면 되니까 충분했다.</p>
+<h3 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h3><p>GUI시대가 되었다. 모든 결과는 즉각 화면을 통해 유저에게 전달된다. 유저의 행동을 항상 화면에 표현해 줘야 한다.<br>코드의 덩치가 점점 커지고, 복잡도가 증가했다. 데이터(M)와 출력(V)을 나누고, 그 사이에서 컨트롤러(C)를 두어 비지니스 로직을 처리했다. 잘 동작한다.</p>
+<h3 id="아쉬움"><a href="#아쉬움" class="headerlink" title="아쉬움"></a>아쉬움</h3><p>코드 생산성에서 퀄리티로 관점이 옮겨가면서 TDD라는 방식이 등장했다. MVC에 적용하려고 보니 실제 테스트해야 하는 대상인 비지니스 로직은 모두 C에 있다. 하지만 C는 V와 너무 얽혀있어 떼어내기가 어렵다. 테스트가 안된다!</p>
+<h3 id="MVP의-등장"><a href="#MVP의-등장" class="headerlink" title="MVP의 등장"></a>MVP의 등장</h3><p>C와 V를 분리하자. V가 GUI일수도 있지만 콘솔일 수도 있도록 바꿔치기 할 수 있게 하자는 아이디어!<br>인터페이스를 사이에 두고, C는 인터페이스만 호출하고 이 인터페이스를 구현한 V가 화면을 처리하게 한다. 이제 C를 테스트 할 수 있게 됐다. 그리고 이 C를 Presenter 라고 불렀다.</p>
+<h3 id="MVVM의-등장"><a href="#MVVM의-등장" class="headerlink" title="MVVM의 등장"></a>MVVM의 등장</h3><p>C가 V에 표현하기 위한 인터페이스 증가. 대부분 반복되는 코드. 귀찮았다. 데이터 바인딩 기술 등장!<br>M과 V를 묶어버리자. V는 M의 변화를 감지하여 알아서 출력할 것이다. 그러니까 이건 VM 이다.</p>
+<h3 id="한걸음-물러서서"><a href="#한걸음-물러서서" class="headerlink" title="한걸음 물러서서"></a>한걸음 물러서서</h3><p>기존의 C 역할을 P가, 그리고 VM 이 하는 것일 뿐 C 로써의 역할은 같다.<br>어떻게 구조화 했는지에 대해 명시하기 위해서 이름만 바꿔 부를 뿐, 결국 MVC의 범주안에서 다를바 없다.</p>
+<h3 id="튜닝의-끝은-순정"><a href="#튜닝의-끝은-순정" class="headerlink" title="튜닝의 끝은 순정"></a>튜닝의 끝은 순정</h3><p>MVP, MVVM, VIPER … 이런거 코드만 많아지고 연결도도 복잡해지고 한눈에 파악하기도 어렵다. 그냥 MVC를 잘 쓰자!</p>
+<p><strong>M</strong><br>데이터 클래스와 데이터의 패치에 대한 코드만 담는다.<br>여러개의 파일/클래스로 구성</p>
+<p><strong>V</strong><br>데이터 결과의 표현만 구현한다.<br>데이터 결과는 바인딩으로 얻어온다.<br>UIViewControler 또는<br>Activity/Fragment 로 한정</p>
+<p><strong>C</strong><br>비지니스 로직만 담는다.<br>M으로 부터 얻은 데이터에 로직을 따르는 처리를 하고<br>결과를 바인딩에 보낸다.<br>여러개의 파일/클래스로 구성<br>그리고 바인딩에는 Rx를 쓴다</p>
 
       
     </div>
@@ -125,7 +131,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/reactive-rx/">reactive, rx</a>
+        <a href="/tags/mvc-mvvm-mvp/">mvc, mvvm, mvp</a>
     </span>
     
 
@@ -136,7 +142,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2017/07/05/fp_rx/#comment">Comments</a>
+          <a href="/2017/07/11/do_mvc/#comment">Comments</a>
         </span>
       </span>
     </div>
