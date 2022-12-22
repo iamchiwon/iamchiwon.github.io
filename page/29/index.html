@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2018/02/21/fp-features/"><span>FP 를 구성하는 요소들</span></a></h3>
+    <h3 class="article-title"><a href="/2018/03/05/pure-function/"><span>순수함수의 의미</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2018/02/21/fp-features/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-02-20T16:07:22.000Z">
-          2018-02-21
+      <a href="/2018/03/05/pure-function/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-03-05T06:30:34.000Z">
+          2018-03-05
         </time>
       </a>
     </span>
@@ -103,21 +103,18 @@
   <div class="article-content">
     <div class="entry">
       
-        <h3 id="언어에서-지원하는-사항"><a href="#언어에서-지원하는-사항" class="headerlink" title="언어에서 지원하는 사항"></a>언어에서 지원하는 사항</h3><ol>
-<li>Immutable Data</li>
-<li>First Class Citizen</li>
-<li>Tail Call Optimization</li>
-</ol>
-<h3 id="프로그래밍-기법"><a href="#프로그래밍-기법" class="headerlink" title="프로그래밍 기법"></a>프로그래밍 기법</h3><ol>
-<li>Pure Function</li>
-<li>Higher-Order Function</li>
-<li>Resursing</li>
-<li>Currying</li>
-</ol>
-<h3 id="FP로-얻는-이점"><a href="#FP로-얻는-이점" class="headerlink" title="FP로 얻는 이점"></a>FP로 얻는 이점</h3><ol>
-<li>Parallelization</li>
-<li>Lazy Evaluation</li>
-</ol>
+        <p><img src="/images/function.png" alt="Function"></p>
+<blockquote>
+<h3 id="순수함수는"><a href="#순수함수는" class="headerlink" title="순수함수는"></a>순수함수는</h3></blockquote>
+<p><em>함수에서 사용될 모든 변수의 값을 입력값으로 받아 사용하고,<br>함수 외부의 값을 변경하지 않는 Side-Effect 가 없는 함수이다.</em></p>
+<p>틀린 말은 아니지만, 좀 더 FP 에서의 의미에 맞게 다시 말하자면</p>
+<blockquote>
+<h3 id="항상-동일-입력에-대해-같은-결과를-만드는-함수"><a href="#항상-동일-입력에-대해-같은-결과를-만드는-함수" class="headerlink" title="항상 동일 입력에 대해 같은 결과를 만드는 함수"></a>항상 동일 입력에 대해 같은 결과를 만드는 함수</h3></blockquote>
+<p>가 더 적절한 표현이다.</p>
+<p>항상 같은 결과를 같는다는 것은,</p>
+<p>결과를 만드는데 필요한 변수는 입력에만 의존한다는 뜻이고,</p>
+<p>즉 Side-Effect가 없다는 의미이다.</p>
+<p>(결국은 같은 말이 되버렸지만)</p>
 
       
     </div>
@@ -130,6 +127,13 @@
     
 
     
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/FP-Pure-Stateless/">FP, Pure, Stateless</a>
+    </span>
+    
 
     </div>
 
@@ -138,7 +142,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2018/02/21/fp-features/#comment">Comments</a>
+          <a href="/2018/03/05/pure-function/#comment">Comments</a>
         </span>
       </span>
     </div>
