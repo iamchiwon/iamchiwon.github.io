@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2017/10/14/talk_at_once/"><span>한마디로 말하면</span></a></h3>
+    <h3 class="article-title"><a href="/2017/10/31/xcode-asset-sclicing/"><span>XCode 이미지 스라이싱 테스트</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2017/10/14/talk_at_once/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-10-14T05:19:53.000Z">
-          2017-10-14
+      <a href="/2017/10/31/xcode-asset-sclicing/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-10-31T06:18:00.000Z">
+          2017-10-31
         </time>
       </a>
     </span>
@@ -103,8 +103,18 @@
   <div class="article-content">
     <div class="entry">
       
-        <h3 id="Functional-Programming-은"><a href="#Functional-Programming-은" class="headerlink" title="Functional Programming 은"></a>Functional Programming 은</h3><p>Side-Effect을 배제한 프로그래밍 방식이다</p>
-<h3 id="Reactive-Progarmming-은"><a href="#Reactive-Progarmming-은" class="headerlink" title="Reactive Progarmming 은"></a>Reactive Progarmming 은</h3><p>Aync 데이터를 취급하는 방법이다</p>
+        <p>Xcode의 Asset 에 있는 이미지를 sclicing 하면 총 9등분할 수 있다.<br>각 등분된 영역이 어떻게 동작하는지 확인하는 테스트</p>
+<ul>
+<li>이렇게 나누고 나면</li>
+</ul>
+<p><img src="/images/slicing1.png"></p>
+<ul>
+<li>이렇게 적용된다.</li>
+</ul>
+<p><img src="/images/slicing2.gif"></p>
+<h4 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h4><ul>
+<li>선이 가로 세로 3개씩 나 오는데, [1|2|3|4] 이렇게 나눠질 때 아래처럼 동작한다.<br>1번영역 유지<br>2번영역 반복<br>3번영역 무시<br>4번영역 유지</li>
+</ul>
 
       
     </div>
@@ -125,7 +135,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2017/10/14/talk_at_once/#comment">Comments</a>
+          <a href="/2017/10/31/xcode-asset-sclicing/#comment">Comments</a>
         </span>
       </span>
     </div>

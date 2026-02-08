@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2019/01/26/rx4h-1st-end/"><span>RxSwift 4시간에 끝내기</span></a></h3>
+    <h3 class="article-title"><a href="/2019/02/25/retryinterval/"><span>Rx.retryInterval</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2019/01/26/rx4h-1st-end/" rel="bookmark">
-        <time class="entry-date published" datetime="2019-01-26T10:58:26.000Z">
-          2019-01-26
+      <a href="/2019/02/25/retryinterval/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-02-25T08:13:14.000Z">
+          2019-02-25
         </time>
       </a>
     </span>
@@ -103,12 +103,48 @@
   <div class="article-content">
     <div class="entry">
       
-        <p><img src="/images/rxswift_4h_devstudy.png" alt="DevStudy"></p>
-<p><a target="_blank" rel="noopener" href="http://devstudy.kr/">DevStudy</a> 에서 진행한 <code>RxSwift 4시간에 끝내기</code> 첫 스터디를 마쳤습니다.</p>
-<p>4시간에 개념, 기초, 기능과 간단한 응용까지는 가능했지만, 좀 더 심화있는 기능까지는 진행하지 못했네요.<br>그래도 스터디의 개설 취지와 목적은 달성한것 같다는 자평입니다. (실제 참가하신 분들의 후기를 봐야겠지만요.. )</p>
-<p>오늘 진행사항도 역시 녹화를 해두었지만 도움이 될 만한 일부 내용만 추려서 유튜브에 올려보려고 합니다.<br>도움이 되셨다는 말씀에 다음에 또 시간을 잡아서 해보려고 합니다. 역시 오프라인으로 직접 만나서 진행하는게 좋네요!</p>
-<p>오늘 참여하신 분들 모두 고생하셨어요~<br><br/><br>ps. 토즈의 장소 대여비는 비싸군요</p>
+        <p>lambda 서버는 request가 올 때 최대 5분까지 살아있다가 다시 다음 request가 오기 전까지 죽어 있습니다.</p>
+<p>이런 서버환경에서 request를 날리면 서버가 다 기동하기 전에 504 에러가 리턴됩니다. 일단 504가 리터되면 다시 한 번 request를 날리면 응답을 받을 수 있어서 이런 요구사항이 나오게 되었습니다.</p>
+<ul>
+<li>504 에러가 온 경우</li>
+<li>총 3번의 재 시도를 해본다.</li>
+<li>처음엔 1초, 다음에 2초, 마지막으로 4초 후에 시도한다.</li>
+<li>그래도 에러가 나오면 무시해 버린다.</li>
+<li>504가 아닌 에러에 대해서는 기존과 동일하게 처리한다.</li>
+</ul>
+<br/>
 
+<p>이것을 Rx에서 처리하기 위해 여러 삽질 끝에 다음과 같은 코드를 얻게 되었습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.retryWhen &#123; error -&gt; <span class="type">Observable</span>&lt;<span class="type">Int</span>&gt; <span class="keyword">in</span></span><br><span class="line">    error</span><br><span class="line">        .flatMap &#123; e -&gt; <span class="type">Observable</span>&lt;<span class="type">Void</span>&gt; <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">guard</span> (e <span class="keyword">as</span> <span class="type">NSError</span>).code <span class="operator">==</span> <span class="number">504</span> <span class="keyword">else</span> &#123; <span class="keyword">return</span> .error(e) &#125;</span><br><span class="line">            <span class="keyword">return</span> .just(())</span><br><span class="line">        &#125;</span><br><span class="line">        .zip(with: <span class="type">Observable</span>&lt;<span class="type">RxTimeInterval</span>&gt;.from([<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>])) &#123; <span class="variable">$1</span> &#125;</span><br><span class="line">        .flatMap &#123;</span><br><span class="line">            <span class="type">Observable</span>&lt;<span class="type">Int</span>&gt;</span><br><span class="line">                .timer(<span class="variable">$0</span>, scheduler: <span class="type">ConcurrentDispatchQueueScheduler</span>(qos: .background))</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>테스트했던 코드와 함께 보면 이렇습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Observable</span>&lt;<span class="type">String</span>&gt;.create &#123; emitter <span class="keyword">in</span></span><br><span class="line">    emitter.onNext(<span class="string">&quot;emit 1&quot;</span>)</span><br><span class="line">    emitter.onNext(<span class="string">&quot;emit 2&quot;</span>)</span><br><span class="line">    emitter.onError(<span class="type">NSError</span>(domain: <span class="string">&quot;error&quot;</span>, code: <span class="number">504</span>, userInfo: <span class="literal">nil</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="type">Disposables</span>.create()</span><br><span class="line">&#125;</span><br><span class="line">.retryWhen &#123; error -&gt; <span class="type">Observable</span>&lt;<span class="type">Int</span>&gt; <span class="keyword">in</span></span><br><span class="line">    error</span><br><span class="line">        .flatMap &#123; e -&gt; <span class="type">Observable</span>&lt;<span class="type">Void</span>&gt; <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">guard</span> (e <span class="keyword">as</span> <span class="type">NSError</span>).code <span class="operator">==</span> <span class="number">504</span> <span class="keyword">else</span> &#123; <span class="keyword">return</span> .error(e) &#125;</span><br><span class="line">            <span class="keyword">return</span> .just(())</span><br><span class="line">        &#125;</span><br><span class="line">        .zip(with: <span class="type">Observable</span>&lt;<span class="type">RxTimeInterval</span>&gt;.from([<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>])) &#123; <span class="variable">$1</span> &#125;</span><br><span class="line">        .flatMap &#123;</span><br><span class="line">            <span class="type">Observable</span>&lt;<span class="type">Int</span>&gt;</span><br><span class="line">                .timer(<span class="variable">$0</span>, scheduler: <span class="type">ConcurrentDispatchQueueScheduler</span>(qos: .background))</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">.subscribe &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;</span><br><span class="line">.disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<p>이제 이것을 extension 으로 만듭니다. RxSwiftExt의 의존성도 제거하였습니다.</p>
+<p><a target="_blank" rel="noopener" href="https://gist.github.com/iamchiwon/318af73e4239a3c9b787d29dbd1860b1">Gist 에서 보기</a></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">ObservableType</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">retryInterval</span>(<span class="keyword">_</span> <span class="params">intervals</span>: [<span class="type">RxTimeInterval</span>], <span class="params">when</span> <span class="params">f</span>: <span class="keyword">@escaping</span> (<span class="type">Error</span>) -&gt; <span class="type">Bool</span>)</span> -&gt; <span class="type">Observable</span>&lt;<span class="keyword">Self</span>.<span class="type">E</span>&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> retryWhen &#123; error -&gt; <span class="type">Observable</span>&lt;<span class="type">Int</span>&gt; <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">let</span> filteredError <span class="operator">=</span> error</span><br><span class="line">                .flatMap &#123; e -&gt; <span class="type">Observable</span>&lt;<span class="type">Void</span>&gt; <span class="keyword">in</span></span><br><span class="line">                    <span class="keyword">guard</span> f(e) <span class="keyword">else</span> &#123; <span class="keyword">return</span> .error(e) &#125;</span><br><span class="line">                    <span class="keyword">return</span> .just(())</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">let</span> intervalsObservable <span class="operator">=</span> <span class="type">Observable</span>&lt;<span class="type">RxTimeInterval</span>&gt;.from(intervals)</span><br><span class="line">            <span class="keyword">return</span> <span class="type">Observable</span>.zip(filteredError, intervalsObservable) &#123; <span class="variable">$1</span> &#125;</span><br><span class="line">                .flatMap &#123; <span class="type">Observable</span>&lt;<span class="type">Int</span>&gt;.timer(<span class="variable">$0</span>, scheduler: <span class="type">ConcurrentDispatchQueueScheduler</span>(qos: .background)) &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<p>그리고 코드는 이렇게 간결해 졌습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Observable</span>&lt;<span class="type">String</span>&gt;.create &#123; emitter <span class="keyword">in</span></span><br><span class="line">    emitter.onNext(<span class="string">&quot;emit 1&quot;</span>)</span><br><span class="line">    emitter.onNext(<span class="string">&quot;emit 2&quot;</span>)</span><br><span class="line">    emitter.onError(<span class="type">NSError</span>(domain: <span class="string">&quot;error&quot;</span>, code: <span class="number">504</span>, userInfo: <span class="literal">nil</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="type">Disposables</span>.create()</span><br><span class="line">&#125;</span><br><span class="line">.retryInterval([<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>]) &#123; (<span class="variable">$0</span> <span class="keyword">as</span> <span class="type">NSError</span>).code <span class="operator">==</span> <span class="number">504</span> &#125;</span><br><span class="line">.subscribe &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;</span><br><span class="line">.disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+
+
+<p>이 코드가 만들어 지는 데 <a target="_blank" rel="noopener" href="https://github.com/wanbok">최완복</a>님께서 많은 도움을 주셨습니다. 감사합니다.</p>
+<br/>
+<hr/>
+<br/>
+
+<p>RxJava에서도 Kotlin용으로 확장을 만들어 안드로이드에서도 적용할 수 있도록 만들었습니다.</p>
+<p><a target="_blank" rel="noopener" href="https://gist.github.com/iamchiwon/80bf93a799abbc40c7b86bc4563eaffe">Gist에서 보기</a></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> Observable<span class="type">&lt;T&gt;</span>.<span class="title">retryInterval</span><span class="params">(intervals: <span class="type">List</span>&lt;<span class="type">Long</span>&gt;, filter: (<span class="type">Throwable</span>) -&gt; <span class="type">Boolean</span>)</span></span>: Observable&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.retryWhen &#123; throwable -&gt;</span><br><span class="line">        throwable</span><br><span class="line">            .flatMap &#123; e -&gt;</span><br><span class="line">                <span class="keyword">if</span> (!filter(e)) <span class="keyword">return</span><span class="symbol">@flatMap</span> Observable.error&lt;Throwable&gt;(e)</span><br><span class="line">                <span class="keyword">return</span><span class="symbol">@flatMap</span> Observable.just(e)</span><br><span class="line">            &#125;</span><br><span class="line">            .zipWith(Observable.fromIterable(intervals)) &#123; _, i -&gt; i &#125;</span><br><span class="line">            .flatMap &#123; Observable.timer(it, TimeUnit.MILLISECONDS, Schedulers.newThread()) &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<p>역시 사용은 매우 간결해 졌습니다.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Observable.create&lt;String&gt; &#123; emitter -&gt;</span><br><span class="line">    emitter.onNext(<span class="string">&quot;emit 1&quot;</span>)</span><br><span class="line">    emitter.onNext(<span class="string">&quot;emit 2&quot;</span>)</span><br><span class="line">    emitter.onError(NetworkException(code = <span class="number">503</span>))</span><br><span class="line">&#125;</span><br><span class="line">    .retryInterval(listOf(<span class="number">1000L</span>, <span class="number">2000L</span>, <span class="number">4000L</span>)) &#123; e -&gt;</span><br><span class="line">        (e <span class="keyword">as</span>? NetworkException)?.code == <span class="number">504</span></span><br><span class="line">    &#125;</span><br><span class="line">    .subscribe(System.<span class="keyword">out</span>::println, System.<span class="keyword">out</span>::println, &#123; print(<span class="string">&quot;completed&quot;</span>) &#125;)</span><br><span class="line">    .addTo(disposeBag)</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -124,7 +160,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/RxSwift-Review/">RxSwift, Review</a>
+        <a href="/tags/RxSwift-extension-retry-retryWhen-retryInterval/">RxSwift, extension, retry, retryWhen, retryInterval</a>
     </span>
     
 
@@ -135,7 +171,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2019/01/26/rx4h-1st-end/#comment">Comments</a>
+          <a href="/2019/02/25/retryinterval/#comment">Comments</a>
         </span>
       </span>
     </div>
