@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  
+  <title>Page 5 | Realism Programmer | development blog</title>
+
+  
+  <meta name="author" content="Song Chiwon" />
+   
+  <meta name="description" content="realism programmer" />
+   
+
+  <meta
+    id="viewport"
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui"
+  />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  
+
+  <meta property="og:site_name" content="Realism Programmer" />
+
+  
+  <meta property="og:image" content="/favicon.ico" />
+  
+
+  <link href="/favicon.ico" rel="icon" />
+  <link
+    rel="alternate"
+    href="/atom.xml"
+    title="Realism Programmer"
+    type="application/atom+xml"
+  />
+  <link
+    rel="stylesheet"
+    href="/css/style.css"
+    media="screen"
+    type="text/css"
+  />
+
+  <script
+    data-ad-client="ca-pub-1803847427663862"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Realism Programmer</a>
+    </h1>
+    <p class="site-description">
+      development blog
+    </p>
+    <a href="https://iamchiwon.github.io">iamchiwon.github.io</a><br />
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/links">Links</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+
+    <main class="site-main posts-loop">
+    
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2022/08/03/understanding-tdd/"><span>TDD 는 테스트를 먼저 만드는 것이 아니다</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2022/08/03/understanding-tdd/" rel="bookmark">
+        <time class="entry-date published" datetime="2022-08-03T10:12:02.000Z">
+          2022-08-03
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p><img src="/images/dont_ear_before_sleep.jpg" alt="정신승리"></p>
+<ul>
+<li>구현을 합니다.</li>
+<li>테스트를 작성합니다.</li>
+<li>테스트가 잘 안됩니다.</li>
+<li>테스트를 만들기 위해 구현을 이것 저것 바꿉니다.</li>
+<li>테스트 합니다.</li>
+<li>잘 안됩니다.</li>
+<li>테스트를 작성하는데 구현보다 시간이 많이 걸립니다.</li>
+<li>하~ 이거 배보다 배꼽이 더 큰거 아닌가요?</li>
+</ul>
+<p>네. 배보다 배꼽이 더 크네요. 그럼 생각을 바꿔봅시다.<br>“<strong>난 원래 배꼽을 만들려는 거였어!</strong>“ 라고 정신승리를 해봅니다.</p>
+<hr>
+<h3 id="테스트는-언제-필요한건가"><a href="#테스트는-언제-필요한건가" class="headerlink" title="테스트는 언제 필요한건가?"></a>테스트는 언제 필요한건가?</h3><p>테스트는 코드를 검증하기 위해 만드는 거죠. 그러니까 코드를 작성하고 나서 검증을 위해 만들게 되죠.<br>하지만, 코드 만들고 실행해 보잖아요? 그래서 잘 돌아가는거 확인 하자나요?<br>그런데도 테스트 코드가 필요한 건가요?</p>
+<p><strong>테스트 코드는 코드가 변경될 때 필요한 겁니다.</strong></p>
+<p>이미 작성된 코드의 구현 내용이 변경될 때 테스트코드가 있어야 합니다.</p>
+<p>1.<code>리팩토링</code> : 동작은 동일하지만 코드가 달라진다.</p>
+<p>일단 코드를 변경하기 전에 정상동작하는 테스트를 만들어 놓고,<br>리팩토링을 합니다.<br>리팩토링이 완료된 후에도 기존 테스트가 정상동작 한다면, 잘 바꾼겁니다.</p>
+<p>2.<code>구현변경</code> : 요구사항이 변경되어 코드가 달라진다.</p>
+<p>일단 코드를 변경하기 전에 정상동작하는 테스트를 만들어 둡니다.<br>변경된 요구사항에 맞춰 올바르게 동작해야할 테스트로 변경해 줍니다.<br>이제 구현을 변경합니다.<br>구현수정 후 테스트가 정상동작 한다면, 잘 바꾼겁니다.</p>
+<hr>
+<blockquote>
+<p><strong>TDD</strong> 할 때는 코드 작성하기 전에 테스트를 먼저 만들라고 하지 않나요?</p>
+</blockquote>
+<p><code>구현변경</code> 케이스와 같습니다. 다만 변경 전의 코드가 ∅ 이었던 것 뿐입니다.<br><strong>TDD</strong>를 한다는 말은 정신승리 하자는 말입니다.</p>
+<hr>
+<p>코드를 작성했다면, 테스트 코드를 만들어서 검증하세요.<br>테스트 코드를 만드는데 불편한 것이 있다면, 테스트가 용이하도록 코드를 변경하세요.<br>테스트 코드를 만드는데 작성하기 어렵다면, 테스트 작성이 용이하도록 리팩토링 하세요.<br>코드 작성시간보다 테스트 코드 작성 시간이 더 많이 소모된다면, 정신승리 해보세요.</p>
+<p>“<strong>난 원래 테스트를 작성하려고 했던거야!</strong>“</p>
+<p>내가 작성하는 모든 설계와 구조와 코드가 테스트를 위한 것 같이 느껴 집니다.<br>마치 테스트가 나의 코드 생산 과정을 <code>주도(drive)</code> 하고 있네요!!</p>
+<p>네. 그것이 test에 의해 driven된 development (<code>테스트 주도개발</code>)인 것입니다.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/tdd-test-driven-development-refactoring/">tdd, test driven development, refactoring</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2022/08/03/understanding-tdd/#comment">Comments</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+
+<nav class="pagination">
+  
+  <a href="/page/4/" class="pagination-prev">Prev</a>
+  
+  
+  <a href="/page/6/" class="pagination-next">Next</a>
+  
+</nav>
+    </main>
+
+    <footer class="site-footer">
+
+  <!-- BlogFooter -->
+  <ins class="adsbygoogle"
+      style="display:inline-block;width:728px;height:90px"
+      data-ad-client="ca-pub-1803847427663862"
+      data-ad-slot="4944894329"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2026 Song Chiwon
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

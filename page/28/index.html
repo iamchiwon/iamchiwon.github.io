@@ -1,0 +1,215 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  
+  <title>Page 28 | Realism Programmer | development blog</title>
+
+  
+  <meta name="author" content="Song Chiwon" />
+   
+  <meta name="description" content="realism programmer" />
+   
+
+  <meta
+    id="viewport"
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui"
+  />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  
+
+  <meta property="og:site_name" content="Realism Programmer" />
+
+  
+  <meta property="og:image" content="/favicon.ico" />
+  
+
+  <link href="/favicon.ico" rel="icon" />
+  <link
+    rel="alternate"
+    href="/atom.xml"
+    title="Realism Programmer"
+    type="application/atom+xml"
+  />
+  <link
+    rel="stylesheet"
+    href="/css/style.css"
+    media="screen"
+    type="text/css"
+  />
+
+  <script
+    data-ad-client="ca-pub-1803847427663862"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Realism Programmer</a>
+    </h1>
+    <p class="site-description">
+      development blog
+    </p>
+    <a href="https://iamchiwon.github.io">iamchiwon.github.io</a><br />
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/links">Links</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+
+    <main class="site-main posts-loop">
+    
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2018/07/21/code-defragment/"><span>코드 응집도 높이기 (해설편)</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/07/21/code-defragment/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-07-21T13:15:01.000Z">
+          2018-07-21
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h2 id="1"><a href="#1" class="headerlink" title="1"></a>1</h2><p><img src="/images/20180721/20180721.001.jpeg"><br>이 포스트는 let us: Go! 2018 summer 세미나 발표 자료의 해설편 입니다.</p>
+<h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><p><img src="/images/20180721/20180721.002.jpeg"><br>이 글에서 말하는 응집도란, SOLID원칙 - 객체지향 시스템을 설계하기 위한 원칙 - 에서 말하는 <code>응집도는 높이고, 결합도는 낮춰라</code> 에서의 응집도가 아닙니다.</p>
+<h2 id="3"><a href="#3" class="headerlink" title="3"></a>3</h2><p><img src="/images/20180721/20180721.003.jpeg"><br>디스크의 조각모음 처럼, 파편화된 코드를 관련성에 따라 인접하게 모으는 것을 <code>응집도를 높인다</code> 라고 표현한 것 뿐입니다. 결국은 <code>코드의 조각모음</code>과 같은 의미 입니다.</p>
+<h2 id="4"><a href="#4" class="headerlink" title="4"></a>4</h2><p><img src="/images/20180721/20180721.004.jpeg"><br>응집도를 높이면 무엇이 좋아질까요? 관련성이 높은 코드가 응집되어 있기 때문에 읽기 쉽고, 흐름을 파악하기 좋아집니다. 특정 동작의 코드를 찾기 쉬워지고 그만큼 유지관리가 편해집니다.</p>
+<h2 id="5"><a href="#5" class="headerlink" title="5"></a>5</h2><p><img src="/images/20180721/20180721.005.jpeg"><br>결국 최종 목표는 관련있는 코드를 가장 가까이에 배치하도록 리팩토링 하는 것입니다. 이것을 <code>응집도를 높인다</code>라고 하겠습니다.</p>
+<h2 id="6"><a href="#6" class="headerlink" title="6"></a>6</h2><p><img src="/images/20180721/20180721.006.jpeg"><br>단순하게 관련성 높은 코드를 가까이 두는 것으로만 작업되면 좋겠지만, 경우에 따라 잘 안되는 경우가 있습니다. 몇 가지 사례를 보면서 제가 해결했던 방법을 나눠보겠습니다.</p>
+<h2 id="7"><a href="#7" class="headerlink" title="7"></a>7</h2><p><img src="/images/20180721/20180721.007.jpeg"><br>처음 코딩을 시작해서 부터 시간이 지나면서 코드가 여기저기 뒤섞이게 되고 응집도는 떨어지게 됩니다. 코드를 정리하는 것 만으로도 응집도를 높일 수 있습니다.</p>
+<h2 id="8"><a href="#8" class="headerlink" title="8"></a>8</h2><p><img src="/images/20180721/20180721.008.jpeg"><br>단순히 코드를 연관성에 따라 재배치 하는 것 만드으로 응집도가 높아진 것을 볼 수 있습니다. 코드의 가독성이 높아졌다는 것을 알 수 있죠. 코드를 크게 3부분으로 나눴는데, 데이터 + 로직 + UI 로 구분하였습다. 경우에 따라 더 세분화 시킬 수도 있겠지만, 기본적으로 이렇게 세등분 하는 것이 가장 기본적입니다. (MVC의 기본이네요)</p>
+<h2 id="9"><a href="#9" class="headerlink" title="9"></a>9</h2><p><img src="/images/20180721/20180721.009.jpeg"><br>두번째 사례입니다. count변수의 값을 라벨에 출력하는 것인데요, 두 개의 함수에 동일 코드가 중복되어 나타나고 있습니다. 같은 코드가 분리되어 응집도가 떨어진 상태 입니다.</p>
+<h2 id="10"><a href="#10" class="headerlink" title="10"></a>10</h2><p><img src="/images/20180721/20180721.010.jpeg"><br>동일 동작의 코드를 한군데로 통합하여 중복을 줄인다면 그만큼 응집도가 높아진 결과를 얻을 수 있습니다.</p>
+<h2 id="11"><a href="#11" class="headerlink" title="11"></a>11</h2><p><img src="/images/20180721/20180721.011.jpeg"><br>다음 사례는 구현부의 위치가 정해져 있어 어쩔 수 없이 관련 코드가 분산될 수 밖에 없는 경우를 보여줍니다. 오버라이드된 메소드 내에서 구현해야 하는 경우가 그렇죠. 코드의 위치가 오버라이드된 메소드로 정해져 버리기 때문에 코드가 분산될 수 밖에 없고 응집도는 떨어지게 됩니다.</p>
+<h2 id="12"><a href="#12" class="headerlink" title="12"></a>12</h2><p><img src="/images/20180721/20180721.012.jpeg"><br>상위 클래스와의 사이에 중간 클래스를 두고 이 것을 상속받도록 처리하고 있습니다. 그리고 이 중간 클래스에서 각 오버라이드 메소드에서 해야할 작업을 클로져로 가지고 있다가 필요시점에 호출해 주는 방식으로 해결을 해보았습니다. 하위 클래스에서는 클로져를 등록하는 것으로 관련 코드를 모두 통합할 수 있게 되었고, 응집도는 높아졌습니다.</p>
+<h2 id="13"><a href="#13" class="headerlink" title="13"></a>13</h2><p><img src="/images/20180721/20180721.013.jpeg"><br>코드가 분산될 수 밖에 없는 경우에는 Selector 를 쓰는 경우도 있습니다. 이벤트를 처리하고자 하는 동작과 그 처리의 구현이 분리될 수 밖에 없어 응집도가 떨어지는 경우 입니다.</p>
+<h2 id="14"><a href="#14" class="headerlink" title="14"></a>14</h2><p><img src="/images/20180721/20180721.014.jpeg"><br>Wrapper 클래스를 하나 만들어서 이 상황을 해결해 보았습니다. Wrapper에서는 이벤트의 등록과 Selector를 모두 구현하고 해당 동작을 클로져로 가지고 있다가 필요시점에 호출해 줍니다. 이 Wrapper를 사용하는 코드에서는 이벤트에 대한 등록과 처리가 모두 한군데로 모아질 수 있게 되었고, 응집도가 높아졌습니다.</p>
+<h2 id="15"><a href="#15" class="headerlink" title="15"></a>15</h2><p><img src="/images/20180721/20180721.015.jpeg"><br>Delegate를 사용하는 경우도 관련 코드가 분리될 수 밖에 없는 경우에 해당합니다.</p>
+<h2 id="16"><a href="#16" class="headerlink" title="16"></a>16</h2><p><img src="/images/20180721/20180721.016.jpeg"><br>역시 Wrapper를 만들어서 해결해 보았습니다.</p>
+<h2 id="17-생략"><a href="#17-생략" class="headerlink" title="17 (생략)"></a>17 (생략)</h2><p>지금까지 5가지의 사례로 응집도가 낮아질 수 밖에 없는 환경을 살펴보고, 해겹방법을 알아봤습니다.<br>모두 동일한 방식으로 해결되는 것을 보았고, 이 외에 다른 경우가 발생하더라도 어떻게 해결할 수 있을지 감이 오실거라고 생각합니다.</p>
+<h2 id="18"><a href="#18" class="headerlink" title="18"></a>18</h2><p><img src="/images/20180721/20180721.018.jpeg"><br>이번에는 동일한 이슈이지만 RxSwift 를 사용해서 더 고급스럽고 일관된 표현으로 처리하는 방법을 알아보겠습니다.</p>
+<h2 id="19"><a href="#19" class="headerlink" title="19"></a>19</h2><p><img src="/images/20180721/20180721.019.jpeg"><br>관련 코드를 데이터 + 로직 + 화면 으로 세등분 하는 것을 앞에서 살펴보았습니다. 하지만 이 분리가 모두 같은 파일에 있을 필요는 없죠. 분류에 따라 서로 다른 파일로 나누는 것도 각 분류 별로 응집도를 높여줄 수 있는 방법일 것입니다.</p>
+<h2 id="20"><a href="#20" class="headerlink" title="20"></a>20</h2><p><img src="/images/20180721/20180721.020.jpeg"><br>데이터의 변경과 그에 대한 처리를 Relay를 통해서 처리하였습니다. 9페이지에서와 비교해 보면 오히려 코드가 더 복잡해진 것 같기도 합니다.</p>
+<h2 id="21"><a href="#21" class="headerlink" title="21"></a>21</h2><p><img src="/images/20180721/20180721.021.jpeg"><br>그렇지만 하나의 데이터가 서로 다른 의미로 처리되는 이러한 경우를 9페이지 처럼 처리한다면, 서로 다른 의미의 코드가 한군데에 뒤섞여 버리는 결과를 얻게 될 것입니다. 이러한 것도 역시 가독성을 해치는 측면에서 응집도가 떨어졌다고 할 수 있습니다.<br>하지만 RxSwift 를 사용하니까 동일 데이터로 서로 다른 처리를 분리처리 하면서도 일관성을 유지하고 있으니 가독성과 응집도 모두 높아진 결과를 얻을 수 있습니다.</p>
+<h2 id="22"><a href="#22" class="headerlink" title="22"></a>22</h2><p><img src="/images/20180721/20180721.022.jpeg"><br>RxSwift에는 확장된 여러 오픈 소스들이 있습니다. 이 중 RxViewController 를 사용하면 위 예제와 같이 오버라이드해서 구현해야 하는 코드도 일관성있고 응집도 높게 처리가 가능합니다.</p>
+<h2 id="23"><a href="#23" class="headerlink" title="23"></a>23</h2><p><img src="/images/20180721/20180721.023.jpeg"><br>Selector 로 분리될수 밖에 없던 코드도 RxSwift로 모두 처리가 가능합니다. 동일한 처리 방식, 일관된 코드, 선언적 표현, 높은 응집도를 모두 얻을 수 있습니다.</p>
+<h2 id="24"><a href="#24" class="headerlink" title="24"></a>24</h2><p><img src="/images/20180721/20180721.024.jpeg"><br>Delegate 처리도 동일하게 처리 가능합니다.<br>하지만 기본 RxCocoa 에서는 아쉽게도 UIImagePickerController 에는 rx 익스텐션이 제공되지 않습니다. 그렇다면 어떻게 해야 하나요? 물론 다른분들이 만들언 놓은 오픈소스를 활용하면 되겠지만, 이번에는 직접 만들어서 처리해 보겠습니다.</p>
+<h2 id="25"><a href="#25" class="headerlink" title="25"></a>25</h2><p><img src="/images/20180721/20180721.025.jpeg"><br>어떤 인스턴스에 .rx 했을 때 나오도록 추가하려면 Reactive 를 확장하면 됩니다. 위 소스는 Base가 UIImagePickerController 인 경우에 대해서 rx확장 메소드를 추가하고 있습니다.</p>
+<h2 id="26"><a href="#26" class="headerlink" title="26"></a>26</h2><p><img src="/images/20180721/20180721.026.jpeg"><br>원리는 16페이지의 Wrapper와 동일합니다. 여기서는 Wrapper 대신에 DelegateProxy 라는 것을 만들게 됩니다. DelegateProxy 를 상속받아 만들게 되는 클래스는 UIImagePickerController 의 Delegate 를 구현하고 여기서 전달되는 결과를 (16페이지에서 클로져로 전달하듯이) subject를 통해서 이벤트로 전달하게 됩니다.<br>위 코드는 DelegateProxy 를 상속하게 되면 만들어 줘야 하는 코드들이고, 실제 UIImagePickerController의 Delegate 구현부가 핵심이 됩니다.</p>
+<h2 id="27"><a href="#27" class="headerlink" title="27"></a>27</h2><p><img src="/images/20180721/20180721.027.jpeg"><br>핵심 구현부는 각 Delegate의 결과를 이벤트로 전달 받을 수 있도록 Subject를 하나씩 가지고 있고, Delegate의 구현에서 이 subject에 데이터를 전달하여 이벤트를 발생시키는 방식입니다.</p>
+<h2 id="28"><a href="#28" class="headerlink" title="28"></a>28</h2><p><img src="/images/20180721/20180721.028.jpeg"><br>이렇게 약간 복잡해 보이지만, 원리는 Wrapper와 동일한 방법을 통해서 rx를 확장하여 기본 제공되지 않는 Delegate 에 대해서도 RxSwift 를 사용한 응집도 높이기가 가능해 집니다.</p>
+<h2 id="29-생략"><a href="#29-생략" class="headerlink" title="29 (생략)"></a>29 (생략)</h2><h2 id="30"><a href="#30" class="headerlink" title="30"></a>30</h2><p><img src="/images/20180721/20180721.030.jpeg"><br>그럼 지금까지의 사항들을 모두 고려하여 예제를 하나 만들어 보도록 하겠습니다.</p>
+<h2 id="31"><a href="#31" class="headerlink" title="31"></a>31</h2><p><img src="/images/20180721/20180721.031.jpeg"><br>텍스트 필드 2개, 버튼 1개, 라벨 1개로 구성된 프로그램 입니다. 필드 2개에서 입력받는 숫자를 + 버튼이 눌릴 때 더해서 라베에 표시해 주는 아주 간단한 프로그램 입니다.</p>
+<h2 id="32"><a href="#32" class="headerlink" title="32"></a>32</h2><p><img src="/images/20180721/20180721.032.jpeg"><br>우선 데이터는 숫자3개가 필요합니다. 더할 두 개의 숫자와 결과 값입니다. 이것이 프로그램에서 사용되는 데이터이기 때문에 Model 을 만들어 두었습니다.</p>
+<h2 id="33"><a href="#33" class="headerlink" title="33"></a>33</h2><p><img src="/images/20180721/20180721.033.jpeg"><br>데이터를 만들었으니 이젠 로직을 만들겠습니다. 여기서 로직은 더하는 행위밖에 없습니다. 더하는 행위는 순수함수로 만들기 위해 입력값을 받아 새로운 출력값을 전달하도록 구성되었고, 현재의 값을 나타내는 것을 RxCocoa의 BehaviorRelay로 구성하였습니다.</p>
+<h2 id="34"><a href="#34" class="headerlink" title="34"></a>34</h2><p><img src="/images/20180721/20180721.034.jpeg"><br>ViewController 는 이렇게 구성될 것입니다. 2개의 Input 과 1개의 Output, 1개의 Event 입니다. 각각 Outlet 으로 연결하고 여기에 대해 처리만 하면 완성될 겁니다.</p>
+<h2 id="35"><a href="#35" class="headerlink" title="35"></a>35</h2><p><img src="/images/20180721/20180721.035.jpeg"><br>처리는 모두 이벤트에 대한 반응을 Reactive 하게 처리하도록 구성하였습니다. 입력값은 기존 값에서 갱신되고 context 의 model 에 다시 저장되도록 처리하였습니다. 버튼이 눌리면 context 의 더하기 함수를 호출하고 그 결과를 다시 context 의 model 에서 유지되도록 하였습니다.<br>출력은 context.model 을 바라보면서 변경될 때마다 출력을 하고 있습니다.</p>
+<h2 id="36"><a href="#36" class="headerlink" title="36"></a>36</h2><p><img src="/images/20180721/20180721.036.jpeg"><br>이것을 큰 그림으로 보면 이렇게 구성됩니다. 스토리보드로 만들어진 View와 이 뷰에 연결된 ViewController.<br>이 ViewController 는 인풋, 이벤트, 아웃풋에 대해서 각각 어떻게 처리할 지를 선언적으로 정의하여 반응하도록 구성되어 있습니다. 그 동작을 하기 위해 현재의 상태 값과 처리 로직을 갖는 Context에 대한 레퍼런스도 갖고 있게 됩니다.<br>로직을 처리하는 Context 는 Model에서 정의하는 데이터를 사용하고 있고, 현재의 state와 이에 대한 처리 함수를 가지고 있습니다.<br>처리 로직에서는 View나 ViewController를 의존하고 있지 않습니다. 그리고 화면에 어떻게 보여야 할지는 정의하고 있지도 않습니다. 오직 자신이 처리할 데이터와 그 결과를 만들어 내는 로직으로만 구성되어 있습니다. UnitTest 를 할 대상이 되고, 이 로직만 완벽히 동작한다면 프로그램은 전체적으로 완벽히 동작할 것입니다.</p>
+<h2 id="37"><a href="#37" class="headerlink" title="37"></a>37</h2><p><img src="/images/20180721/20180721.037.jpeg"><br>코드를 정리하면서 비지니스 로직을 가지고 있는 클래스에 Context 라는 애매한 이름보다는 ViewModel 이라는 그럴듯한 이름으로 변경하였습니다. (View/ViewController 와 Model 사이에 있으니까요)<br>이것이 MVVM 아키텍쳐의 기본 구성과 동작 방식입니다.</p>
+<h2 id="38-생략"><a href="#38-생략" class="headerlink" title="38 (생략)"></a>38 (생략)</h2><p>이 예제의 소스는 <a target="_blank" rel="noopener" href="https://github.com/iamchiwon/CodeCohensive">여기</a>에서 확인해 보실 수 있습니다.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/응집도-RxSwift-Functional-Reactive-Declarative/">응집도, RxSwift, Functional, Reactive, Declarative</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2018/07/21/code-defragment/#comment">Comments</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+
+<nav class="pagination">
+  
+  <a href="/page/27/" class="pagination-prev">Prev</a>
+  
+  
+  <a href="/page/29/" class="pagination-next">Next</a>
+  
+</nav>
+    </main>
+
+    <footer class="site-footer">
+
+  <!-- BlogFooter -->
+  <ins class="adsbygoogle"
+      style="display:inline-block;width:728px;height:90px"
+      data-ad-client="ca-pub-1803847427663862"
+      data-ad-slot="4944894329"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2026 Song Chiwon
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

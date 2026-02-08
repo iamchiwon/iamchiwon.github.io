@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  
+  <title>쉽게 배우는 RxSwift (#3) - stream | Realism Programmer | development blog</title>
+
+  
+  <meta name="author" content="Song Chiwon" />
+   
+  <meta name="description" content="realism programmer" />
+     <meta
+  name="keywords" content="rxswift, stream"> 
+
+  <meta
+    id="viewport"
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui"
+  />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  
+  <meta property="og:title" content="쉽게 배우는 RxSwift (#3) - stream" />
+  
+
+  <meta property="og:site_name" content="Realism Programmer" />
+
+  
+  <meta property="og:image" content="/favicon.ico" />
+  
+
+  <link href="/favicon.ico" rel="icon" />
+  <link
+    rel="alternate"
+    href="/atom.xml"
+    title="Realism Programmer"
+    type="application/atom+xml"
+  />
+  <link
+    rel="stylesheet"
+    href="/css/style.css"
+    media="screen"
+    type="text/css"
+  />
+
+  <script
+    data-ad-client="ca-pub-1803847427663862"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Realism Programmer</a>
+    </h1>
+    <p class="site-description">
+      development blog
+    </p>
+    <a href="https://iamchiwon.github.io">iamchiwon.github.io</a><br />
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/links">Links</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>쉽게 배우는 RxSwift (#3) - stream</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/12/26/starting-rxswift3/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-12-26T08:17:33.000Z">
+          2018-12-26
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h3 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h3><ol>
+<li>RxSwfit의 데이터 흐름을 <code>stream</code>이라고 합니다.</li>
+<li><strong>Observable</strong>은 <code>stream</code>으로써 종단에는 <strong>subscribe</strong> 하여 사용합니다.</li>
+<li><strong>subscribe</strong>가 없으면 <strong>Observable</strong>은 동작하지 않습니다.</li>
+<li><code>stream</code>에 흐르는 동안에 <strong>Operator</strong>를 통해서 데이터를 조작할 수 있습니다.</li>
+</ol>
+<br/>
+
+<h3 id="Everything-is-stream"><a href="#Everything-is-stream" class="headerlink" title="Everything is stream"></a>Everything is <code>stream</code></h3><p>RxSwift 는 비동기 처리를 지원합니다.<br>그 처리의 중심에는 <code>stream</code> 이 있습니다.<br><code>stream</code>은 데이터의 흐름입니다.</p>
+<p>데이터의 발생(Generator)부터 데이터의 소비(Consumer)까지 데이터가 흐르는 통로를 만들고, 이 통로를 통해서 데이터를 전달하겠다는 아이디어 입니다.</p>
+<p>생각해보면, 미래에 발생하는 것이 데이터이건, 이벤트 이건, 사용자 입력이던 구분될 필요는 없습니다. 무엇이든 나중에 비동기 적으로 발생하는 (통칭)정보를 나중에 누군가 필요한 곳(Consumer)에 전달하겠다는 의미는 동일합니다.</p>
+<br/>
+
+<h3 id="Observable-➜-subscribe"><a href="#Observable-➜-subscribe" class="headerlink" title="Observable ➜ subscribe"></a>Observable ➜ subscribe</h3><p>그러니까 발생에서 -&gt; 소비까지를 서로 연결해서 흐르는 통로만 만들어 주면 되는 것입니다. 이러한 통로를 <code>stream</code> 이라고 합니다.</p>
+<p>RxSwift 에서는 이러한 <code>stream</code>을 <strong>Observable</strong> 이라고 합니다. <strong>Observable</strong> (혹은 <strong>ObservableType</strong>) 은 <code>stream</code> 으로 데이터의 흐름을 의미합니다.</p>
+<p>이 <code>stream</code>은 분기될 수도 있고, 합칠 수도 있습니다. <br/>그리고 그 중간에서 데이터를 변경시키거나 조작할 수도 있습니다. 그리고 그 여정의 끝은 <strong>subscribe</strong>입니다.</p>
+<p><code>stream</code>의 끝에서 <strong>subscribe</strong>함으로써 그 데이터를 사용(Consume)할 수 있습니다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Observable -&gt; (stream) -&gt; subscribe</span><br></pre></td></tr></table></figure>
+
+<p>lazy하게 동작하기 위해서 <strong>subscribe</strong>이 되지 않으면 그 <code>stream</code>은 흐르지 않습니다. 그래서 <strong>Observable</strong>만 잔뜩 만들어 놓는다고 해도 subscribe하지 않으면 동작하지 않습니다.</p>
+<p><code>stream</code>의 중간에서 데이터를 빼내서 사용하지는 못합니다. 사용하고자 하는 데이터는 모두 <strong>subscribe</strong>을 통해서만 사용하게 됩니다.</p>
+<p>서두에 언급한 것 처럼, 데이터나 이벤트나 사용자 입력등을 RxSwift를 사용해서 처리하겠다고 한다면 최종으로 사용할 곳 까지 <code>stream</code>을 연결시키는 것이 RxSwift 프로그래밍 입니다.</p>
+<br/>
+
+<h3 id="Stream-Example"><a href="#Stream-Example" class="headerlink" title="Stream Example"></a>Stream Example</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@IBOutlet</span> <span class="keyword">var</span> plusButton: <span class="type">UIButton</span>!</span><br><span class="line"><span class="keyword">@IBOutlet</span> <span class="keyword">var</span> minusButton: <span class="type">UIButton</span>!</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> stream1 <span class="operator">=</span> plusButton.rx.tap</span><br><span class="line">  .throttle(<span class="number">0.5</span>, latest: <span class="literal">false</span>, scheduler: <span class="type">MainScheduler</span>.instance)</span><br><span class="line">  .map &#123; <span class="keyword">_</span> <span class="keyword">in</span> <span class="number">1</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> stream2 <span class="operator">=</span> minusButton.rx.tap</span><br><span class="line">  .throttle(<span class="number">0.5</span>, latest: <span class="literal">false</span>, scheduler: <span class="type">MainScheduler</span>.instance)</span><br><span class="line">  .map &#123; <span class="keyword">_</span> <span class="keyword">in</span> <span class="operator">-</span><span class="number">1</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Observable</span>.merge(stream1, stream2)</span><br><span class="line">  .subscribe(onNext: addCounting)</span><br><span class="line">  .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+
+<p>여기서 버튼의 tap 이벤트를 0.5초동안 반복터치를 배제하면서 받아들여 +1과 -1로 변형하고 있습니다.<br/><br>이 각각의 <code>stream</code> 흐름을 하나로 합쳐서(merge) 사용(subscribe)하는 것을 볼 수 있습니다.</p>
+<br/>
+
+<h3 id="next-Operator"><a href="#next-Operator" class="headerlink" title="next: Operator"></a>next: <strong>Operator</strong></h3><p><strong>map</strong> 이나 <strong>throttle</strong> 의 생소한 것이 나왔습니다. 대충 살펴봤을 때 <code>stream</code>에 흘러가는 데이터에 조작을 가하는 것으로 보여집니다. 이처럼 흘러가는 데이터를 조작하는 것을 <strong>Operator</strong> 라고 합니다.<br/><br>다음에는 이 <strong>Operator</strong> 를 살펴보겠습니다.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/rxswift-stream/">rxswift, stream</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+	<section id="comments" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
+
+	<script type="text/javascript">
+	var disqus_shortname = 'iamchiwon-dev-blog';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+
+  <!-- BlogFooter -->
+  <ins class="adsbygoogle"
+      style="display:inline-block;width:728px;height:90px"
+      data-ad-client="ca-pub-1803847427663862"
+      data-ad-slot="4944894329"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2026 Song Chiwon
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

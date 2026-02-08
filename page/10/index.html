@@ -1,0 +1,195 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  
+  <title>Page 10 | Realism Programmer | development blog</title>
+
+  
+  <meta name="author" content="Song Chiwon" />
+   
+  <meta name="description" content="realism programmer" />
+   
+
+  <meta
+    id="viewport"
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui"
+  />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  
+
+  <meta property="og:site_name" content="Realism Programmer" />
+
+  
+  <meta property="og:image" content="/favicon.ico" />
+  
+
+  <link href="/favicon.ico" rel="icon" />
+  <link
+    rel="alternate"
+    href="/atom.xml"
+    title="Realism Programmer"
+    type="application/atom+xml"
+  />
+  <link
+    rel="stylesheet"
+    href="/css/style.css"
+    media="screen"
+    type="text/css"
+  />
+
+  <script
+    data-ad-client="ca-pub-1803847427663862"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Realism Programmer</a>
+    </h1>
+    <p class="site-description">
+      development blog
+    </p>
+    <a href="https://iamchiwon.github.io">iamchiwon.github.io</a><br />
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/links">Links</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+
+    <main class="site-main posts-loop">
+    
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2020/06/02/signinwithapple-rx/"><span> Sign in with Apple + Rx</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2020/06/02/signinwithapple-rx/" rel="bookmark">
+        <time class="entry-date published" datetime="2020-06-02T07:32:12.000Z">
+          2020-06-02
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm7erlIt6GTqyc7onXaM3LpGhCDqYvtJlRmn9nNtgV_yTvqqUI&usqp=CAU" alt="Sign in with Apple"></p>
+<p>Apple의 심사지침 “4.8 Apple로 로그인” 항목에 의해서 소셜 로그인 서비스를 사용하는 앱은 Apple로 로그인 기능을 동등한 옵션으로 제공해야 합니다.</p>
+<p>그리고 이 옵션은 2020년 4월중으로 적용하라고 했었습니다.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/kr/news/?id=09122019b">https://developer.apple.com/kr/news/?id=09122019b</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/kr/news/?id=03042020d">https://developer.apple.com/kr/news/?id=03042020d</a></li>
+</ul>
+<p>그리고 다시 6월 말 까지로 연장되었죠.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/kr/news/?id=03262020b">https://developer.apple.com/kr/news/?id=03262020b</a></li>
+</ul>
+<p>그동안 미뤄왔던 이제 애플로그인을 적용할 때가 됐네요..<br>레퍼런스는 이미 많기 때문에 적용하는데 어려움은 없습니다.<br>근데, 이걸 Rx로 적용해서 하려고 찾아보니 의외로 없네요.</p>
+<p>그래서 하나 만들었습니다.<br>라이브러리로 만들까도 했지만 코드 몇 줄 넣으면 되는 일이라 번거롭게 하지 않았습니다.</p>
+<hr>
+<p>소스코드는 Gist로 공유합니다.<br><a target="_blank" rel="noopener" href="https://gist.github.com/iamchiwon/20aa57d4e8f6110bc3f79742c2fb6cc5">https://gist.github.com/iamchiwon/20aa57d4e8f6110bc3f79742c2fb6cc5</a></p>
+<p>Apple Login 에 Rx를 적용하면<br>이렇게 됩니다.</p>
+<p>(1) ASAuthorizationAppleIDButton 를 사용하는 경우</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">appleLoginButton.rx</span><br><span class="line">    .loginOnTap(scope: [.fullName, .email])</span><br><span class="line">    .subscribe(onNext: &#123; result <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> auth <span class="operator">=</span> result.credential <span class="keyword">as?</span> <span class="type">ASAuthorizationAppleIDCredential</span> <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">        <span class="built_in">print</span>(auth.user)</span><br><span class="line">        <span class="built_in">print</span>(auth.email)</span><br><span class="line">        <span class="built_in">print</span>(auth.fullName<span class="operator">?</span>.givenName)</span><br><span class="line">        <span class="built_in">print</span>(auth.fullName<span class="operator">?</span>.familyName)</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+
+<p>(2) CustomButton 을 사용하는 경우</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">customButton.rx.tap</span><br><span class="line">    .map &#123; <span class="keyword">_</span> <span class="keyword">in</span> <span class="type">ASAuthorizationAppleIDProvider</span>() &#125;</span><br><span class="line">    .flatMap &#123; <span class="variable">$0</span>.rx.login(scope: [.fullName, .email], on: customButton.window<span class="operator">!</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    .subscribe(onNext: &#123; result <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> auth <span class="operator">=</span> result.credential <span class="keyword">as?</span> <span class="type">ASAuthorizationAppleIDCredential</span> <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">        <span class="built_in">print</span>(auth.user)</span><br><span class="line">        <span class="built_in">print</span>(auth.email)</span><br><span class="line">        <span class="built_in">print</span>(auth.fullName<span class="operator">?</span>.givenName)</span><br><span class="line">        <span class="built_in">print</span>(auth.fullName<span class="operator">?</span>.familyName)</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+
+<br/>
+행복하시길..
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2020/06/02/signinwithapple-rx/#comment">Comments</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+
+<nav class="pagination">
+  
+  <a href="/page/9/" class="pagination-prev">Prev</a>
+  
+  
+  <a href="/page/11/" class="pagination-next">Next</a>
+  
+</nav>
+    </main>
+
+    <footer class="site-footer">
+
+  <!-- BlogFooter -->
+  <ins class="adsbygoogle"
+      style="display:inline-block;width:728px;height:90px"
+      data-ad-client="ca-pub-1803847427663862"
+      data-ad-slot="4944894329"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2026 Song Chiwon
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

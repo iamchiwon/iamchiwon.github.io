@@ -1,0 +1,195 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  
+  <title>함수형 프로그래밍과 Rx | Realism Programmer | development blog</title>
+
+  
+  <meta name="author" content="Song Chiwon" />
+   
+  <meta name="description" content="realism programmer" />
+     <meta
+  name="keywords" content="reactive, rx"> 
+
+  <meta
+    id="viewport"
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui"
+  />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  
+  <meta property="og:title" content="함수형 프로그래밍과 Rx" />
+  
+
+  <meta property="og:site_name" content="Realism Programmer" />
+
+  
+  <meta property="og:image" content="/favicon.ico" />
+  
+
+  <link href="/favicon.ico" rel="icon" />
+  <link
+    rel="alternate"
+    href="/atom.xml"
+    title="Realism Programmer"
+    type="application/atom+xml"
+  />
+  <link
+    rel="stylesheet"
+    href="/css/style.css"
+    media="screen"
+    type="text/css"
+  />
+
+  <script
+    data-ad-client="ca-pub-1803847427663862"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Realism Programmer</a>
+    </h1>
+    <p class="site-description">
+      development blog
+    </p>
+    <a href="https://iamchiwon.github.io">iamchiwon.github.io</a><br />
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/links">Links</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>함수형 프로그래밍과 Rx</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/07/05/fp_rx/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-07-05T05:13:00.000Z">
+          2017-07-05
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>얼마전 지인들 간의 모임에서 함수형 프로그래밍에 대해 했던 얘기를 정리한 것이다.<br>대화 중에 이 내용을 글로 써야겠다 싶었는데, 귀찮아서 미루다가 거의 한달쯤 지나서야 쓰고 있다.<br>우린 Rx 를 얘기하고 있었다. 근데 FP(Function Programming)과 혼재되어 말하면서 대화가 꼬이기 시작했다. 이 시점에서 함수형 프로그램(FP)과 반응형 프로그래밍(Rx) 을 정리할 필요가 있다.<br>사실 둘은 전혀 상관이 없다.</p>
+<h3 id="Functional-Programming"><a href="#Functional-Programming" class="headerlink" title="Functional Programming"></a>Functional Programming</h3><p>함수형 프로그래밍은 익히 여러 군데서 주워들은대로 오래 전부터 있던 개념이었다. 하지만 시대적 요구가 OOP를 선택했다. 그리고 요즘 다시 FP가 대두 되는 것은 역시 시대적 요구 때문이다.<br>멀티 코어와 멀티 쓰레드로 동시성 프로그래밍이 필요해 지면서 OOP로는 한계가 드러났다.<br>병렬로 로직이 수행되도 문제가 없으려면 처리하려는 데이터가 처리 도중에 외부에 의해서 변형되면 안되니까 immutable이 도입됐고, 로직 수행 중에 외부의 영향을 받지 않도록 조건을 걸다 보니 pure function이 되었다. 그러고 나니 그 오래 전에 하던 FP가 제시하던 것과 동일하게 됐고, 결국 FP가 다시 주목받기 시작했다.</p>
+<p>여기서 Pure Function 이란 파라미터로 주어진 값 외에 다른 값을 참조하거나 리턴값 외에 다른 값을 변경하지 않는 코드 덩어리 이다. 이를 “Side Effect 가 없다” 라고 한다. 이를 강조하고 실수를 막기 위해서 사용되는 자료형들은 immutable 들이 되어야 했다.</p>
+<p>함수형 프로그래밍은 이 개념을 지키면 어떤 언어로든 가능하다. 하지만 함수형 언어를 구분하는 것은 함수를 어떻게 취급하느냐에 따라 나뉜다. 함수형 언어는 함수를 변수 또는 리스트에 넣거나 파라미터로 전달하거나 리턴값으로 사용할 수 있다. 함수를 이렇게 처리할 수 있으면 함수형 언어다. 이 관점에서 Java 8이 FP를 도입했다고는 하나 함수형 언어가 아니다. (함수 자체를 취급하지 않고 함수가 담긴 객체를 취급하니까)</p>
+<h3 id="Reactive-Programming"><a href="#Reactive-Programming" class="headerlink" title="Reactive Programming"></a>Reactive Programming</h3><p>반응형 프로그래밍은 말 그대로 반응에 의해 동작하는 프로그래밍 기법이다. 모든것을 통제하는 절차적 방식이 아니라 변수간, 로직간, 서로간에 조건을 작성해 두고 변화가 일어날 때 조건에 의해서 동작하는 방식으로 프로그래밍 하는 것이다. 이 개념이 도입된 많은 프레임워크나 라이브러리들이 있지만 요즘에는 단연 Rx 가 인기다. 그게 뭔지는 다른 여러곳에 자료가 많으니 굳이 말할 필요 없다.</p>
+<p>결론은 함수형 프로그래밍과 반응형 프로그래밍은 서로 다른것이다. Rx 에서 함수형의 그것처럼 처리되는 일부 문법적인 표현이 있다고 해서 서로 헷갈리거나 비슷하게 인식해서는 안되겠다.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/reactive-rx/">reactive, rx</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+	<section id="comments" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
+
+	<script type="text/javascript">
+	var disqus_shortname = 'iamchiwon-dev-blog';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+
+  <!-- BlogFooter -->
+  <ins class="adsbygoogle"
+      style="display:inline-block;width:728px;height:90px"
+      data-ad-client="ca-pub-1803847427663862"
+      data-ad-slot="4944894329"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2026 Song Chiwon
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

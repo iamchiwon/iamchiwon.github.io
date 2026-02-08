@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  
+  <title>Rx로 만드는 개미수열 | Realism Programmer | development blog</title>
+
+  
+  <meta name="author" content="Song Chiwon" />
+   
+  <meta name="description" content="realism programmer" />
+     <meta
+  name="keywords" content="rx, ant"> 
+
+  <meta
+    id="viewport"
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui"
+  />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  
+  <meta property="og:title" content="Rx로 만드는 개미수열" />
+  
+
+  <meta property="og:site_name" content="Realism Programmer" />
+
+  
+  <meta property="og:image" content="/favicon.ico" />
+  
+
+  <link href="/favicon.ico" rel="icon" />
+  <link
+    rel="alternate"
+    href="/atom.xml"
+    title="Realism Programmer"
+    type="application/atom+xml"
+  />
+  <link
+    rel="stylesheet"
+    href="/css/style.css"
+    media="screen"
+    type="text/css"
+  />
+
+  <script
+    data-ad-client="ca-pub-1803847427663862"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Realism Programmer</a>
+    </h1>
+    <p class="site-description">
+      development blog
+    </p>
+    <a href="https://iamchiwon.github.io">iamchiwon.github.io</a><br />
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/links">Links</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Rx로 만드는 개미수열</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/05/23/rx-ant/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-05-23T11:30:46.000Z">
+          2017-05-23
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <ul>
+<li>RxJava 2.0.7</li>
+<li>Eclipse Gradle Project</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://medium.com/@jooyunghan/%EA%B0%9C%EB%AF%B8-%EC%88%98%EC%97%B4-%EC%B1%85%EC%9D%84-%EC%93%B0%EB%8B%A4-31f42dbe4d31#.68qpvj9o6">개미 수열을 푸는 10가지 방법</a> 을 읽다가 Rx로 해보자는 생각으로 만들어 봤음</p>
+<h3 id="1-개미수열"><a href="#1-개미수열" class="headerlink" title="1. 개미수열"></a>1. 개미수열</h3><p>1 11 12 1121 122111 … 수열은 이전 수열에 의해 생성되는데, 이전 수열의 구성과 반복되는 개수를 조합하여 나타낸다.<br>(예) 1121 다음 수열은 1이 2번 반복되고 2가 1번, 1이 한번 나오므로 122111 이 된다.</p>
+<h3 id="2-수열생성"><a href="#2-수열생성" class="headerlink" title="2. 수열생성"></a>2. 수열생성</h3><p>1121 에서 다음 수열을 만들어 내는 방법</p>
+<p>그룹화</p>
+<p>같은 숫자가 반복되는 경우에 따라 나눈다 : 11 , 2 , 1<br>숫자와 반복 회수로 구성한다. : 12 , 21 , 11 </p>
+<p>합치기</p>
+<p>11, 21, 11 을 하나의 수열로 합친다. : 112111</p>
+<p>재귀</p>
+<p>결과로 얻은 수열을 다음 수열 계산을 위한 입력으로 사용한다.</p>
+<h3 id="3-RxJava-로-처리"><a href="#3-RxJava-로-처리" class="headerlink" title="3. RxJava 로 처리"></a>3. RxJava 로 처리</h3><ul>
+<li>수열은 String 으로 처리했음</li>
+</ul>
+<p><strong>그룹화</strong><br>구룹화된 구성을 전달하는 Observable 을 만든다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Observable.create(emitter -&gt; &#123;</span><br><span class="line">    <span class="comment">// 구룹화 처리</span></span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 각 그룹 전달하기</span></span><br><span class="line">    emitter.onNext(grouped); <span class="comment">// 전달</span></span><br><span class="line">    <span class="comment">// 그룹화 끝</span></span><br><span class="line">    emitter.onComplete(); <span class="comment">// 끝</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>합치기</strong></p>
+<p>그룹화 되어 전달되는 값을 합치는데 reduce 를 사용했다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Observable.fromArray(<span class="keyword">new</span> String[] &#123;<span class="string">&quot;12&quot;</span>, <span class="string">&quot;21&quot;</span>, <span class="string">&quot;11&quot;</span>&#125;)</span><br><span class="line">          .reduce((pre, post) -&gt; pre + post)</span><br></pre></td></tr></table></figure>
+
+<p><strong>재귀</strong></p>
+<ul>
+<li>여기서 Subject를 사용했는데, subject를 subscript 한 곳에서 다음 개미수열을 생성하고 onNext 로 전달하여 subject의 다음 입력값으로 사용한다.</li>
+<li>수열의 처음은 “1”로 시작하므로 기본값 “1”을 가진 BehaviorSubject 를 사용한다.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">BehaviorSubject.createDefault(<span class="string">&quot;1&quot;</span>).subscribe(curr -&gt; &#123;</span><br><span class="line"></span><br><span class="line">    group(curr).reduce((pre, post) -&gt; pre + post)</span><br><span class="line">               .subscribe(next -&gt; &#123;</span><br><span class="line">                    <span class="comment">// 결과의 숫자열을 다음번 연산을 위한 값으로 사용한다.</span></span><br><span class="line">                    innerSubject.onNext(next);</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/iamchiwon/RxAntSerial">전체소스</a></p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/rx-ant/">rx, ant</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+	<section id="comments" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
+
+	<script type="text/javascript">
+	var disqus_shortname = 'iamchiwon-dev-blog';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+
+  <!-- BlogFooter -->
+  <ins class="adsbygoogle"
+      style="display:inline-block;width:728px;height:90px"
+      data-ad-client="ca-pub-1803847427663862"
+      data-ad-slot="4944894329"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2026 Song Chiwon
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

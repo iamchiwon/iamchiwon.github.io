@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  
+  <title>Rx에겐 특별한 것이 있다. | Realism Programmer | development blog</title>
+
+  
+  <meta name="author" content="Song Chiwon" />
+   
+  <meta name="description" content="realism programmer" />
+     <meta
+  name="keywords" content="RxSwift, Reactive, Swift"> 
+
+  <meta
+    id="viewport"
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui"
+  />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  
+  <meta property="og:title" content="Rx에겐 특별한 것이 있다." />
+  
+
+  <meta property="og:site_name" content="Realism Programmer" />
+
+  
+  <meta property="og:image" content="/favicon.ico" />
+  
+
+  <link href="/favicon.ico" rel="icon" />
+  <link
+    rel="alternate"
+    href="/atom.xml"
+    title="Realism Programmer"
+    type="application/atom+xml"
+  />
+  <link
+    rel="stylesheet"
+    href="/css/style.css"
+    media="screen"
+    type="text/css"
+  />
+
+  <script
+    data-ad-client="ca-pub-1803847427663862"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Realism Programmer</a>
+    </h1>
+    <p class="site-description">
+      development blog
+    </p>
+    <a href="https://iamchiwon.github.io">iamchiwon.github.io</a><br />
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/links">Links</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Rx에겐 특별한 것이 있다.</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/11/29/rxhasmore/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-11-29T05:30:21.000Z">
+          2018-11-29
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h4 id="Rx에-대해서-자주-듣는-질문"><a href="#Rx에-대해서-자주-듣는-질문" class="headerlink" title="Rx에 대해서 자주 듣는 질문"></a>Rx에 대해서 자주 듣는 질문</h4><ol>
+<li>Rx가 뭐하는 건가요?</li>
+<li>Rx를 쓰면 좋은가요?</li>
+</ol>
+<p>Rx에 대해서 처음 접하시는 분들이 여기 저기서 Rx를 얘기하니까 요즘 핫한 신기술인가보다. 해야 되는 건가보다. 남들 다 하니까 나도 해야겠다.. 이런 생각들을 하시는 것 같다. 그래서 위와 같은 질문들이 나오는 거라고 생각한다.<br>간단히 답하면 이렇다.</p>
+<ul>
+<li>Rx 는 Utility 입니다. 편하려고 만든겁니다. 그래서 쓰면 분명히 좋습니다.</li>
+<li>Rx 는 비동기 처리를 위한 라이브러리 입니다.</li>
+</ul>
+<h4 id="Rx는-라이브러리"><a href="#Rx는-라이브러리" class="headerlink" title="Rx는 라이브러리"></a>Rx는 라이브러리</h4><p>Rx는 철학이나 아키텍처나 프레임워크가 아닙니다. 그냥 유틸리티 라이브러리 입니다. 그러니까 적용한다해도 쓰고 싶은 부분에 일부만 써도 상관없습니다. 왜 쓰는지, 왜 편해지는지만 알면 그냥 쓰면 됩니다.<br>뭔가 대단한거라고 생각하고 무리하게 적용부터 하려고 한다면 의미 없습니다.</p>
+<h4 id="Rx는-비동기-처리용"><a href="#Rx는-비동기-처리용" class="headerlink" title="Rx는 비동기 처리용"></a>Rx는 비동기 처리용</h4><p>Bolts, Promise, Task, Future 등을 써보신 분이라면 이미 Rx를 알고있는 것과 다를바 없습니다. 용도가 똑같기 때문입니다.<br>모른다 해도 비동기로 처리되어 생성된 결과를 depth를 높이지 않고 처리하게 해준다는 것은 모두 같습니다.</p>
+<h4 id="Rx에겐-뭔가-특별한-것이-있다"><a href="#Rx에겐-뭔가-특별한-것이-있다" class="headerlink" title="Rx에겐 뭔가 특별한 것이 있다."></a>Rx에겐 뭔가 특별한 것이 있다.</h4><p>위에서 언급한 라이브러리들과 용도나 동작은 같지만, Rx에는 뭔가 특별한 것이 있습니다. 바로 <code>Operator</code> 입니다.<br>Async하게 전달되는 데이터를 조작해서 사용하는 부분이 다른 비동기 유틸과 차별되는 부분이죠. 그리고 그 기능이 굉장히 다양하고 강력해서 이 부분을 어렵다고 느끼는 분들이 대다수 입니다.<br>사실 이 부분은 대충 어떠한 것들이 있는지 알고 나중에 필요할 때가 되면 적절한 것을 찾아낼 수만 있으면 됩니다. 그래서 <a target="_blank" rel="noopener" href="http://reactivex.io/documentation/operators.html">A Decision Tree of Observable Operators</a> 에서 가이드를 제공하고 있으니 참고하시면 됩니다.</p>
+<p>이렇게 놓고 보면 Rx는 전혀 어려울 것이 없습니다. 학습곡선이 높다는 주변의 말만 듣고 배우고 사용하는데 겁먹을 필요가 없습니다. 그러니 <strong>필요하면 쓰세요</strong></p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/RxSwift-Reactive-Swift/">RxSwift, Reactive, Swift</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+	<section id="comments" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
+
+	<script type="text/javascript">
+	var disqus_shortname = 'iamchiwon-dev-blog';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+
+  <!-- BlogFooter -->
+  <ins class="adsbygoogle"
+      style="display:inline-block;width:728px;height:90px"
+      data-ad-client="ca-pub-1803847427663862"
+      data-ad-slot="4944894329"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2026 Song Chiwon
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

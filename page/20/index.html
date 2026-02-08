@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  
+  <title>Page 20 | Realism Programmer | development blog</title>
+
+  
+  <meta name="author" content="Song Chiwon" />
+   
+  <meta name="description" content="realism programmer" />
+   
+
+  <meta
+    id="viewport"
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui"
+  />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  
+
+  <meta property="og:site_name" content="Realism Programmer" />
+
+  
+  <meta property="og:image" content="/favicon.ico" />
+  
+
+  <link href="/favicon.ico" rel="icon" />
+  <link
+    rel="alternate"
+    href="/atom.xml"
+    title="Realism Programmer"
+    type="application/atom+xml"
+  />
+  <link
+    rel="stylesheet"
+    href="/css/style.css"
+    media="screen"
+    type="text/css"
+  />
+
+  <script
+    data-ad-client="ca-pub-1803847427663862"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Realism Programmer</a>
+    </h1>
+    <p class="site-description">
+      development blog
+    </p>
+    <a href="https://iamchiwon.github.io">iamchiwon.github.io</a><br />
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/links">Links</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+
+    <main class="site-main posts-loop">
+    
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2018/12/05/starting-rxswift2/"><span>쉽게 배우는 RxSwift (#2) - 비동기 작업</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/12/05/starting-rxswift2/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-12-05T10:30:30.000Z">
+          2018-12-05
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h2 id="Rx의-용도"><a href="#Rx의-용도" class="headerlink" title="Rx의 용도"></a>Rx의 용도</h2><p>Rx는 어디에 적용해야 합니까? <code>비동기</code>처리 라이브러리니까 <code>비동기</code> 처리할 때 사용하면 됩니다.</p>
+<p>물론 동기 데이터도 RxSwift를 사용해서 비동기적으로 처리할 수 있지만, 그저 Rx를 쓰고싶다는 마음에 과용하는 것은 득될게 없습니다.</p>
+<h2 id="비동기-작업"><a href="#비동기-작업" class="headerlink" title="비동기 작업"></a>비동기 작업</h2><p>비동기 작업은 <em>동기적이지 않은 작업</em> 입니다. 동기적인 작업은 선행작업이 끝날때까지 기다렸다가 다음작업이 진행되는 것입니다. 그래서 비동기 작업은 선행작업이 끝나지 않아도 다음작업이 진행되는 것입니다.</p>
+<p>그래서 보통 시간이 오래걸리는 작업의 경우 - 예를들어 네트워크로부터 데이터를 다운로드 하는 경우 - 비동기로 처리하게 됩니다.</p>
+<p>비동기로 수행되는 작업은 수행후 결과를 콜백을 통해서 전달합니다. 그래서 호출하는 코드와 그 결과를 받아서 사용하는 부분이 코드가 분리되고 파편화 됩니다.</p>
+<p>비동기로 작업되는 경우 여러 작업이 동시에 처리되는 경우가 많기 때문에, 쓰레드로 나눠서 처리하게 됩니다. 그러다 보니 쓰레드 관리도 해줘야 합니다.</p>
+<p>여러 작업이 얽히거나 시나리오가 복잡해지면 매우 골치아파집니다.</p>
+<h2 id="비동기-라이브러리"><a href="#비동기-라이브러리" class="headerlink" title="비동기 라이브러리"></a>비동기 라이브러리</h2><p>이런 비동기 처리를 선형적으로 만들어 <a target="_blank" rel="noopener" href="http://callbackhell.com/">Callback-Hell</a> 애서 벗어나게 도와주는 라이브러리들이 있습니다. </p>
+<p>비교해 보시면 모두 사용 형태가 같다는 것을 알 수 있습니다.</p>
+<h3 id="1-PromiseKit"><a href="#1-PromiseKit" class="headerlink" title="1. PromiseKit"></a>1. <a target="_blank" rel="noopener" href="https://github.com/mxcl/PromiseKit">PromiseKit</a></h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">UIApplication</span>.shared.isNetworkActivityIndicatorVisible <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> fetchImage <span class="operator">=</span> <span class="type">URLSession</span>.shared.dataTask(.promise, with: url).compactMap&#123; <span class="type">UIImage</span>(data: <span class="variable">$0</span>.data) &#125;</span><br><span class="line"><span class="keyword">let</span> fetchLocation <span class="operator">=</span> <span class="type">CLLocationManager</span>.requestLocation().lastValue</span><br><span class="line"></span><br><span class="line">firstly &#123;</span><br><span class="line">    when(fulfilled: fetchImage, fetchLocation)</span><br><span class="line">&#125;.done &#123; image, location <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">self</span>.imageView.image <span class="operator">=</span> image</span><br><span class="line">    <span class="keyword">self</span>.label.text <span class="operator">=</span> <span class="string">&quot;<span class="subst">\(location)</span>&quot;</span></span><br><span class="line">&#125;.ensure &#123;</span><br><span class="line">    <span class="type">UIApplication</span>.shared.isNetworkActivityIndicatorVisible <span class="operator">=</span> <span class="literal">false</span></span><br><span class="line">&#125;.catch &#123; error <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">self</span>.show(<span class="type">UIAlertController</span>(for: error), sender: <span class="keyword">self</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-BoltsFramework"><a href="#2-BoltsFramework" class="headerlink" title="2. BoltsFramework"></a>2. <a target="_blank" rel="noopener" href="https://github.com/BoltsFramework/Bolts-Swift">BoltsFramework</a></h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">save(object).continueWith &#123; task <span class="keyword">in</span> </span><br><span class="line">  <span class="keyword">if</span> task.cancelled &#123;</span><br><span class="line">    <span class="comment">// Save was cancelled</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> task.faulted &#123;</span><br><span class="line">    <span class="comment">// Save failed</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// Object was successfully saved</span></span><br><span class="line">    <span class="keyword">let</span> result <span class="operator">=</span> task.result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-RxSwift"><a href="#4-RxSwift" class="headerlink" title="4. RxSwift"></a>4. <a target="_blank" rel="noopener" href="https://github.com/ReactiveX/RxSwift">RxSwift</a></h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">save(data)</span><br><span class="line">    .subscribe &#123; event <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">switch</span> event &#123;</span><br><span class="line">        <span class="keyword">case</span> .next(<span class="keyword">_</span>):</span><br><span class="line">            <span class="comment">//save sucess</span></span><br><span class="line">        <span class="keyword">case</span> .completed:</span><br><span class="line">            <span class="comment">//job completed</span></span><br><span class="line">        <span class="keyword">case</span> .error(<span class="keyword">_</span>):</span><br><span class="line">            <span class="comment">//job cancled with error</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="RxSwfit"><a href="#RxSwfit" class="headerlink" title="RxSwfit"></a>RxSwfit</h2><p>이제 본격적으로 RxSwift 내용이 시작됩니다.</p>
+<ol>
+<li>비동기 데이터는 <code>Observable</code> 에 담겨 전달됩니다.</li>
+<li>이 데이터를 받아서 처리하는 것은 <code>subscribe</code> 에서 처리합니다.</li>
+<li>처리방식은 3가지가 있습니다.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.next : 데이터 전달</span><br><span class="line">.complted : 데이터 전달 끝</span><br><span class="line">.error : 오류 발생</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>가장 간단하게 <code>Observable</code> 을 만들 수 있는 것은 <code>just</code> 입니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">_</span> <span class="operator">=</span> <span class="type">Observable</span>.just(<span class="string">&quot;Hello World&quot;</span>)</span><br><span class="line">    .subscribe &#123; event <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">switch</span> event &#123;</span><br><span class="line">        <span class="keyword">case</span> .next(<span class="keyword">let</span> greeting):</span><br><span class="line">            <span class="built_in">print</span>(greeting)</span><br><span class="line">        <span class="keyword">case</span> .completed:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[completed]&quot;</span>)</span><br><span class="line">        <span class="keyword">case</span> .error(<span class="keyword">let</span> err):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[error: <span class="subst">\(err)</span>]&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Hello World</span></span><br><span class="line"><span class="comment">// [completed]</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>_ =  로 리턴값을 처리하는 것은 다음에 알아봅시다.</p>
+</blockquote>
+<p>이번에는 <code>just</code> 가 아니라 <code>from</code> 을 사용해 보갰습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">_</span> <span class="operator">=</span> <span class="type">Observable</span>.from([<span class="string">&quot;Hello&quot;</span>, <span class="string">&quot;World&quot;</span>])</span><br><span class="line">    .subscribe &#123; event <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">switch</span> event &#123;</span><br><span class="line">        <span class="keyword">case</span> .next(<span class="keyword">let</span> greeting):</span><br><span class="line">            <span class="built_in">print</span>(greeting)</span><br><span class="line">        <span class="keyword">case</span> .completed:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[completed]&quot;</span>)</span><br><span class="line">        <span class="keyword">case</span> .error(<span class="keyword">let</span> err):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[error: <span class="subst">\(err)</span>]&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Hello</span></span><br><span class="line"><span class="comment">// World</span></span><br><span class="line"><span class="comment">// [completed]</span></span><br></pre></td></tr></table></figure>
+
+<p>결과를 보니 <code>from</code> 에서 array 로 입력값을 주니까 하나씩 전달되고 맨 끝에 <strong>completed</strong> 가 되는 것을 볼 수 있습니다.</p>
+<p>이렇게 <code>Observable</code> 이 전달하는 데이터를 순차적으로 받아서 <code>subscribe</code> 에서 처리하하고 데이터가 다 끝나면 <strong>completed</strong> 가 되는 기본 동작을 알아봤습니다.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Rx-RxSwift-Starter-Async/">Rx, RxSwift, Starter, Async</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2018/12/05/starting-rxswift2/#comment">Comments</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+
+<nav class="pagination">
+  
+  <a href="/page/19/" class="pagination-prev">Prev</a>
+  
+  
+  <a href="/page/21/" class="pagination-next">Next</a>
+  
+</nav>
+    </main>
+
+    <footer class="site-footer">
+
+  <!-- BlogFooter -->
+  <ins class="adsbygoogle"
+      style="display:inline-block;width:728px;height:90px"
+      data-ad-client="ca-pub-1803847427663862"
+      data-ad-slot="4944894329"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2026 Song Chiwon
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

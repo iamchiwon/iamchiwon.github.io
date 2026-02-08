@@ -1,0 +1,226 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  
+  <title>코드 가치관 | Realism Programmer | development blog</title>
+
+  
+  <meta name="author" content="Song Chiwon" />
+   
+  <meta name="description" content="realism programmer" />
+     <meta
+  name="keywords" content=""> 
+
+  <meta
+    id="viewport"
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui"
+  />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  
+  <meta property="og:title" content="코드 가치관" />
+  
+
+  <meta property="og:site_name" content="Realism Programmer" />
+
+  
+  <meta property="og:image" content="/favicon.ico" />
+  
+
+  <link href="/favicon.ico" rel="icon" />
+  <link
+    rel="alternate"
+    href="/atom.xml"
+    title="Realism Programmer"
+    type="application/atom+xml"
+  />
+  <link
+    rel="stylesheet"
+    href="/css/style.css"
+    media="screen"
+    type="text/css"
+  />
+
+  <script
+    data-ad-client="ca-pub-1803847427663862"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Realism Programmer</a>
+    </h1>
+    <p class="site-description">
+      development blog
+    </p>
+    <a href="https://iamchiwon.github.io">iamchiwon.github.io</a><br />
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/links">Links</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>코드 가치관</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2021/05/06/important/" rel="bookmark">
+        <time class="entry-date published" datetime="2021-05-06T08:35:37.000Z">
+          2021-05-06
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h3 id="가치관"><a href="#가치관" class="headerlink" title="가치관"></a>가치관</h3><p>본인이 가치있다고 여기는 것이 무엇인가에 대한 주관적인 생각을 <code>가치관</code>이라고 합니다.</p>
+<ul>
+<li>난 건강이 가장 중요하다고 생각해</li>
+<li>난 가족이 가장 중요하다고 생각해</li>
+<li>난 돈이 가장 중요하다고 생각해</li>
+</ul>
+<p>이런식으로 표현될 수 있죠. 결정의 순간들이 있을 때마다 이 가치관이 작동해서 더 중요하다고 생각되는 것으로 결정하게 됩니다.</p>
+<blockquote>
+<p>가치관은 결정의 기준이 된다.</p>
+</blockquote>
+<br/>
+
+<h3 id="코드-가치관"><a href="#코드-가치관" class="headerlink" title="코드 가치관"></a>코드 가치관</h3><p>코드를 작성할 때 어떠한 점을 더 중요하게 여기는가? 하는 것이 <code>코드 가치관</code>입니다.</p>
+<ul>
+<li>코드는 가독성이 중요해</li>
+<li>코드는 퍼포먼스가 중요해</li>
+<li>코드는 짧은게 더 좋아</li>
+</ul>
+<p>이런식으로 표현될 수 있겠죠. 개발자라면 단지 동작하는 코드뿐 아니라 더 좋은 코드를 만들기 위해 고민하는게 당연하죠. 어떤것이 더 좋은 코드인가에 대해서 개발자들에게는 어느정도 공감대가 형성되어 있습니다. 그리고 그러한 것들이 정리되어 <a target="_blank" rel="noopener" href="http://www.yes24.com/Product/Goods/11681152?OzSrank=1">Clean Code</a> 같은 책으로 나와있기도 하죠.</p>
+<br/>
+
+<h3 id="무엇이-더-좋은-코드인가"><a href="#무엇이-더-좋은-코드인가" class="headerlink" title="무엇이 더 좋은 코드인가?"></a>무엇이 더 좋은 코드인가?</h3><p><strong>[JAVA] 10진수로 이루어진 Int 값의 각 자리수의 합을 더하시요.</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sumDigits1</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> String.valueOf(n)</span><br><span class="line">                 .chars()</span><br><span class="line">                 .map(Character::getNumericValue)</span><br><span class="line">                 .sum();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sumDigits2</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      sum += n % <span class="number">10</span>;</span><br><span class="line">      n /= <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>두 개의 함수가 작성되었습니다. 모두 요구사항대로 동작하죠.</p>
+<ol>
+<li>stream을 사용해 직관적이고 간략하게 표현된 1번이 좋은 코드다!</li>
+<li>int 를 String 으로 변환하는 불필요한 과정으로 효율성이 좋은 2번이 좋은 코드다!</li>
+</ol>
+<p>어떤것이 더 좋은 코드 입니까?<br>답은 코드 가치관에 따라 다를겁니다.</p>
+<blockquote>
+<p>좋은 코드에 정답은 없다.</p>
+</blockquote>
+<br/>
+
+<h3 id="정해진-것은-없다"><a href="#정해진-것은-없다" class="headerlink" title="정해진 것은 없다"></a>정해진 것은 없다</h3><p>동작환경이 제한된 <code>자바카드</code>(<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Java_Card">Wikipedia</a>, <a target="_blank" rel="noopener" href="https://javacardforum.com/">Forum</a>) 같은 기술을 사용할 때 2번코드가 더 좋겠죠. 프로젝트 구성원이 모두 stream에 대해 잘 이해하고 있고, 엔터프라이즈 동작환경을 가진 곳에서는 1번 코드가 좋아 보일 수도 있겠죠. 결국 코드에 정답은 없습니다. 목적과 용도에 적합한 코드만 있을 뿐이죠.</p>
+<p><em>어느정도 좋은 코드에 대한 공감대는 있다.</em></p>
+<p>맞습니다. 하지만 절대적인 기준은 아닙니다.<br>현재의 개발 환경에서 어떤것이 가장 적합한 코드일까를 생각하면서 그 기준에 따라서, 혹은 각자가 가진 코드 가치관에 따라서 좋은 코드는 달라집니다.</p>
+<p>나는 맞고 너는 틀렸어. 라는 경직된 생각이 개발자에게는 가장 경계해야하는 가치관이 아닐까 생각합니다.</p>
+<blockquote>
+<p>유연한 사고가 개발자의 덕목이다</p>
+</blockquote>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+	<section id="comments" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
+
+	<script type="text/javascript">
+	var disqus_shortname = 'iamchiwon-dev-blog';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+
+  <!-- BlogFooter -->
+  <ins class="adsbygoogle"
+      style="display:inline-block;width:728px;height:90px"
+      data-ad-client="ca-pub-1803847427663862"
+      data-ad-slot="4944894329"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2026 Song Chiwon
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  
+  <title>Page 21 | Realism Programmer | development blog</title>
+
+  
+  <meta name="author" content="Song Chiwon" />
+   
+  <meta name="description" content="realism programmer" />
+   
+
+  <meta
+    id="viewport"
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui"
+  />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  
+
+  <meta property="og:site_name" content="Realism Programmer" />
+
+  
+  <meta property="og:image" content="/favicon.ico" />
+  
+
+  <link href="/favicon.ico" rel="icon" />
+  <link
+    rel="alternate"
+    href="/atom.xml"
+    title="Realism Programmer"
+    type="application/atom+xml"
+  />
+  <link
+    rel="stylesheet"
+    href="/css/style.css"
+    media="screen"
+    type="text/css"
+  />
+
+  <script
+    data-ad-client="ca-pub-1803847427663862"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Realism Programmer</a>
+    </h1>
+    <p class="site-description">
+      development blog
+    </p>
+    <a href="https://iamchiwon.github.io">iamchiwon.github.io</a><br />
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/links">Links</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+
+    <main class="site-main posts-loop">
+    
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2018/12/03/starting-rxswift/"><span>쉽게 배우는 RxSwift (#1) - 설치하기</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/12/03/starting-rxswift/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-12-03T08:57:57.000Z">
+          2018-12-03
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h2 id="공식-페이지"><a href="#공식-페이지" class="headerlink" title="공식 페이지"></a>공식 페이지</h2><p>일단 공식페이지에 가서 둘러보자.<br><a target="_blank" rel="noopener" href="http://reactivex.io/">http://reactivex.io/</a></p>
+<ol>
+<li>Rx 가 ReactiveX 라는 것을 알 수 있다.</li>
+<li>Rx가 뭔지 짧게 한 문장으로 소개하고 있다.<blockquote>
+<p>An API for asynchronous programming with observable streams</p>
+</blockquote>
+</li>
+<li><code>Doc</code> 메뉴를 보면, <code>Observable</code>, <code>Operators</code>, <code>Single</code>, <code>Subject</code>, <code>Scheduler</code> 로 구성되어 있다. ( 이것들만 알면 끝이다. )</li>
+<li><code>Language</code> 메뉴를 보면, Java 부터 Swift 까지 그리고 그 외 Other 들도 포함해서 다양한 언어를 지원하고 있는 것을 알 수 있다.<blockquote>
+<p>RxJava, RxJS, Rx.NET, RxScala, RxClojure, RxSwift<br>UniRx, RxCpp, RxLua, Rx.rb, RxPY, RxGo, RxGroovy, RxJRuby, RxKotlin, RxPHP, reaxive, RxDart<br>RxNetty, RxAndroid, RxCocoa</p>
+</blockquote>
+</li>
+<li><code>Resource</code> 메뉴에 <code>Tutorial</code>이 있다. 언어별로 설명되어 있으니 그거 봐도 배울 수 있다.</li>
+</ol>
+<p>정의도 잘 되어있고, 구성이나 설명도 잘 되어 있다. 배우기 어려울 것이 전혀 없다.</p>
+<h2 id="RxSwift"><a href="#RxSwift" class="headerlink" title="RxSwift"></a>RxSwift</h2><p><code>Language</code> 에서 <code>RxSwift</code> 를 선택하면 <a target="_blank" rel="noopener" href="https://github.com/ReactiveX/RxSwift">Github</a> 프로젝트로 연결된다. 오픈소스니까 다 확인해 볼 수 있다.</p>
+<h3 id="설치"><a href="#설치" class="headerlink" title="설치"></a>설치</h3><p>설치는 이 한 줄로 설명 끝</p>
+<blockquote>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod <span class="string">&#x27;RxSwift&#x27;</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<hr>
+<p>이제</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> RxSwift</span><br></pre></td></tr></table></figure>
+
+<p>하고 빌드해서 잘 되면 끝이다.</p>
+<p>이렇게 1단계 완료!</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Rx-RxSwift-Starter/">Rx, RxSwift, Starter</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2018/12/03/starting-rxswift/#comment">Comments</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+
+<nav class="pagination">
+  
+  <a href="/page/20/" class="pagination-prev">Prev</a>
+  
+  
+  <a href="/page/22/" class="pagination-next">Next</a>
+  
+</nav>
+    </main>
+
+    <footer class="site-footer">
+
+  <!-- BlogFooter -->
+  <ins class="adsbygoogle"
+      style="display:inline-block;width:728px;height:90px"
+      data-ad-client="ca-pub-1803847427663862"
+      data-ad-slot="4944894329"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2026 Song Chiwon
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  
+  <title>커링의 활용 + 팁 | Realism Programmer | development blog</title>
+
+  
+  <meta name="author" content="Song Chiwon" />
+   
+  <meta name="description" content="realism programmer" />
+     <meta
+  name="keywords" content="FP, swift, Currying, Tip"> 
+
+  <meta
+    id="viewport"
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui"
+  />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  
+  <meta property="og:title" content="커링의 활용 + 팁" />
+  
+
+  <meta property="og:site_name" content="Realism Programmer" />
+
+  
+  <meta property="og:image" content="/favicon.ico" />
+  
+
+  <link href="/favicon.ico" rel="icon" />
+  <link
+    rel="alternate"
+    href="/atom.xml"
+    title="Realism Programmer"
+    type="application/atom+xml"
+  />
+  <link
+    rel="stylesheet"
+    href="/css/style.css"
+    media="screen"
+    type="text/css"
+  />
+
+  <script
+    data-ad-client="ca-pub-1803847427663862"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Realism Programmer</a>
+    </h1>
+    <p class="site-description">
+      development blog
+    </p>
+    <a href="https://iamchiwon.github.io">iamchiwon.github.io</a><br />
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/links">Links</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>커링의 활용 + 팁</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/10/01/currying-tip/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-10-01T01:52:00.000Z">
+          2018-10-01
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <blockquote>
+<p>이 내용은 <a target="_blank" rel="noopener" href="https://programmers.co.kr/learn/courses/4806">함수형 프로그래밍 강의</a> 에서 질문된 것에 대한 답변으로, 공유하면 좋을 내용이라 공개합니다.</p>
+</blockquote>
+<h2 id="Currying"><a href="#Currying" class="headerlink" title="Currying"></a>Currying</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f1</span>(<span class="keyword">_</span> <span class="params">a</span>:<span class="keyword">Any</span>, <span class="keyword">_</span> <span class="params">b</span>: <span class="keyword">Any</span>, <span class="keyword">_</span> <span class="params">c</span>: <span class="keyword">Any</span>)</span> -&gt; <span class="keyword">Any</span></span><br></pre></td></tr></table></figure>
+<p>이 함수를 커링하면</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f2</span>(<span class="keyword">_</span> <span class="params">a</span>:<span class="keyword">Any</span>)</span> -&gt; (<span class="keyword">Any</span>) -&gt; (<span class="keyword">Any</span>) -&gt; <span class="keyword">Any</span></span><br></pre></td></tr></table></figure>
+<p>가 됩니다.</p>
+<p>커링은 파라미터를 하나씩만 갖는 함수들로 쪼개는 것입니다.<br>당연히 <code>f1(1,2,3)</code> 의 결과나 <code>f2(1)(2)(3)</code>의 결과나 같아야 하겠죠.</p>
+<p>커링은 함수들의 합성을 용이하게도 해주지만, 하나의 함수를 다양하게 사용할 수 있도록 해주기도 합니다.</p>
+<p>예를 들어</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">request</span>(<span class="keyword">_</span> <span class="params">baseUrl</span>: <span class="type">String</span>,</span></span><br><span class="line"><span class="function">             <span class="keyword">_</span> <span class="params">method</span>: <span class="type">HttpMethod</span>,</span></span><br><span class="line"><span class="function">             <span class="keyword">_</span> <span class="params">path</span>: <span class="type">String</span>,</span></span><br><span class="line"><span class="function">             <span class="keyword">_</span> <span class="params">parameters</span>: [<span class="params">String</span>:<span class="keyword">Any</span>]<span class="operator">?</span>)</span> -&gt; <span class="type">HttpRequest</span></span><br></pre></td></tr></table></figure>
+<p>이러한 함수가 있다고 할 때 이것을 커링하면 이렇게 사용할 수 있습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">request</span>(<span class="keyword">_</span> <span class="params">baseUrl</span>: <span class="type">String</span>)</span> -&gt; (<span class="type">HttpMethod</span>) -&gt; (<span class="type">String</span>) -&gt; ([String:<span class="keyword">Any</span>]<span class="operator">?</span>) -&gt; <span class="type">HttpRequest</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> oldApiRequest <span class="operator">=</span> request(<span class="string">&quot;legacy_api_server&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> newApiRequest <span class="operator">=</span> request(<span class="string">&quot;new_api_server&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> oldRequestGet <span class="operator">=</span> oldApiRequest(.get)</span><br><span class="line"><span class="keyword">let</span> oldRequestPost <span class="operator">=</span> oldApiRequest(.post)</span><br><span class="line"><span class="operator">...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//레거시 서버에 get 요청하기</span></span><br><span class="line"><span class="keyword">let</span> httpRequest <span class="operator">=</span> oldRequestGet(<span class="string">&quot;/list&quot;</span>)(<span class="literal">nil</span>)</span><br><span class="line"><span class="comment">//신규 서버에 post 요청하기</span></span><br><span class="line"><span class="keyword">let</span> httpRequest2 <span class="operator">=</span> newRequestPost(<span class="string">&quot;/post&quot;</span>)([<span class="string">&quot;param&quot;</span>:<span class="string">&quot;data&quot;</span>])</span><br></pre></td></tr></table></figure>
+<p>이렇게 하면 하나의 함수를 가지고 여러 용도의 함수를 만드는 것과 같은 효과를 낼 수 있습니다.</p>
+<blockquote>
+<p>이러한 부분을 습득하시고 난 후 커링을 고려해서 함수를 만들게 된다면 어떤 순서로 파라미터를 배치하는 것이 활용성에 좋을지를 고민하는 단계로 들어서게 될 겁니다.<br/><br>그리고 잘 설계된 소스들을 보면서 함수의 파라미터 순서까지 살펴보는 관점을 가질 수 있게 될 것입니다.</p>
+</blockquote>
+<h2 id="Currying-Tip"><a href="#Currying-Tip" class="headerlink" title="Currying Tip"></a>Currying Tip</h2><p>매번 커링된 함수를 새로 만들 필요 없이 커링시켜주는 함수를 따로 만들어 사용할 수도 있겠죠?</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">currying</span>&lt;<span class="type">A</span>,<span class="type">B</span>,<span class="type">C</span>,<span class="type">D</span>,<span class="type">E</span>&gt;(<span class="keyword">_</span> <span class="params">f</span>: <span class="keyword">@escaping</span> (<span class="type">A</span>, <span class="type">B</span>, <span class="type">C</span>, <span class="type">D</span>) -&gt; <span class="type">E</span>)</span> -&gt; (<span class="type">A</span>) -&gt; (<span class="type">B</span>) -&gt; (<span class="type">C</span>) -&gt; (<span class="type">D</span>) -&gt; <span class="type">E</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; a <span class="keyword">in</span> </span><br><span class="line">        <span class="keyword">return</span> &#123; b <span class="keyword">in</span> </span><br><span class="line">            <span class="keyword">return</span> &#123; c <span class="keyword">in</span> </span><br><span class="line">                <span class="keyword">return</span> &#123; d <span class="keyword">in</span> </span><br><span class="line">                    <span class="keyword">return</span> f(a, b, c, d)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">request</span>(<span class="keyword">_</span> <span class="params">baseUrl</span>: <span class="type">String</span>,</span></span><br><span class="line"><span class="function">             <span class="keyword">_</span> <span class="params">method</span>: <span class="type">HttpMethod</span>,</span></span><br><span class="line"><span class="function">             <span class="keyword">_</span> <span class="params">path</span>: <span class="type">String</span>,</span></span><br><span class="line"><span class="function">             <span class="keyword">_</span> <span class="params">parameters</span>: [<span class="params">String</span>:<span class="keyword">Any</span>]<span class="operator">?</span>)</span> -&gt; <span class="type">HttpRequest</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> oldApiRequest <span class="operator">=</span> currying(request)(<span class="string">&quot;legacy_api_server&quot;</span>)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/FP-swift-Currying-Tip/">FP, swift, Currying, Tip</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+	<section id="comments" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
+
+	<script type="text/javascript">
+	var disqus_shortname = 'iamchiwon-dev-blog';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+
+  <!-- BlogFooter -->
+  <ins class="adsbygoogle"
+      style="display:inline-block;width:728px;height:90px"
+      data-ad-client="ca-pub-1803847427663862"
+      data-ad-slot="4944894329"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2026 Song Chiwon
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
