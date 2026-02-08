@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2018/10/22/legacy-to-rx/"><span>레거시 코드를 Rx로 변환하기</span></a></h3>
+    <h3 class="article-title"><a href="/2018/10/24/letusgo2018fall/"><span>Advaned higher-order function</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2018/10/22/legacy-to-rx/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-10-22T06:29:18.000Z">
-          2018-10-22
+      <a href="/2018/10/24/letusgo2018fall/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-10-24T07:29:02.000Z">
+          2018-10-24
         </time>
       </a>
     </span>
@@ -103,22 +103,13 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>이런 레거시 코드가 있다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">downloadImage</span>(<span class="params">from</span> <span class="params">url</span>: <span class="type">URL</span>,</span></span><br><span class="line"><span class="function">                   <span class="params">completion</span>: <span class="keyword">@escaping</span> (<span class="type">UIImage</span>?) -&gt; <span class="type">Void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> image <span class="operator">=</span> <span class="keyword">try?</span> <span class="type">UIImage</span>(data: <span class="type">Data</span>(contentsOf: url)) &#123;</span><br><span class="line">            completion(image)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            completion(<span class="literal">nil</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h4 id="let-us-Go-2018-가을-발표-자료"><a href="#let-us-Go-2018-가을-발표-자료" class="headerlink" title="let us: Go! 2018 가을 발표 자료"></a><a target="_blank" rel="noopener" href="https://www.slideshare.net/ChiwonSong/20181020-advanced-higherorder-function">let us: Go! 2018 가을 발표 자료</a></h4><iframe src="//www.slideshare.net/slideshow/embed_code/key/2A8iStmvP6ENQE" frameborder=0 marginwidth=0 marginheight=0 width=510 height=400 scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;"> </iframe>
 
-<p>이 코드에 RxSwift를 적용하기 위해서 코드 다음처럼 일일이 수정하게 된다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">downloadImage</span>(<span class="params">from</span> <span class="params">url</span>: <span class="type">URL</span>)</span> -&gt; <span class="type">Observable</span>&lt;<span class="type">UIImage</span>?&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="type">Observable</span>.create &#123; emitter <span class="keyword">in</span></span><br><span class="line">        <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">let</span> image <span class="operator">=</span> <span class="keyword">try?</span> <span class="type">UIImage</span>(data: <span class="type">Data</span>(contentsOf: url)) &#123;</span><br><span class="line">                emitter.onNext(image)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                emitter.onNext(<span class="literal">nil</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            emitter.onCompleted()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">Disposables</span>.create()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>그리고 그게 많아지면 아주 귀..찮다</p>
-<h2 id="자동으로-처리해-보자"><a href="#자동으로-처리해-보자" class="headerlink" title="자동으로 처리해 보자"></a>자동으로 처리해 보자</h2><p>바꾸다 보면, 공통적인 부분 보인다. 매번 새로 만들지 말고 Rx를 적용해 보자.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">reactivex</span>&lt;<span class="type">I</span>, <span class="type">O</span>&gt;(<span class="keyword">_</span> <span class="params">f</span>: <span class="keyword">@escaping</span> (<span class="type">I</span>, <span class="keyword">@escaping</span> (<span class="type">O</span>) -&gt; <span class="type">Void</span>) -&gt; <span class="type">Void</span>)</span> -&gt; (<span class="type">I</span>) -&gt; <span class="type">Observable</span>&lt;<span class="type">O</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; i <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">return</span> <span class="type">Observable</span>.create &#123; emitter <span class="keyword">in</span></span><br><span class="line">            f(i, &#123; o <span class="keyword">in</span></span><br><span class="line">                emitter.onNext(o)</span><br><span class="line">                emitter.onCompleted()</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">return</span> <span class="type">Disposables</span>.create()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>보통 레거시 코드는 인풋을 받고 아웃풋을 고차함수로 받게 되니까, 이런형태의 함수들을 Rx로 커링하는 함수를 만들었다.</p>
-<p>이 함수를 사용해서 레거시에 Rx가 적용된 함수를 얻을 수 있다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> rxdownloader <span class="operator">=</span> reactivex(downloadImage)</span><br></pre></td></tr></table></figure>
-
-<p>이제 <code>rxdownloader</code>를 새로운 함수처럼 사용하면 된다.</p>
-<p>코드는 여기에,<br><a target="_blank" rel="noopener" href="https://gist.github.com/iamchiwon/46b3732ec20fac568eb509adc2ec927a">https://gist.github.com/iamchiwon/46b3732ec20fac568eb509adc2ec927a</a></p>
+<ul>
+<li>슬라이드쉐어에 올라간 자료에서 서머리 페이지에 한글이 깨진것을 다 올리고 나서야 알았다!</li>
+<li><a href="/images/20181020advancedhigher-orderfunction-181020040354.pdf">pdf를 다운로드</a>해서 보자~</li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=HVRre-y1hnM&list=PL03rJBlpwTaD6HmnyeLW5Pv-nz2aEm-MS&index=3">발표영상</a>을 참고하자 ( <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=cXi_CmZuBgg&list=PL03rJBlpwTaD6HmnyeLW5Pv-nz2aEm-MS">이전 발표 영상들</a> )</li>
+</ul>
 
       
     </div>
@@ -131,13 +122,6 @@
     
 
     
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/legacy-refactoring-rxswift-higher-order-funciton/">legacy, refactoring, rxswift, higher-order funciton</a>
-    </span>
-    
 
     </div>
 
@@ -146,7 +130,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2018/10/22/legacy-to-rx/#comment">Comments</a>
+          <a href="/2018/10/24/letusgo2018fall/#comment">Comments</a>
         </span>
       </span>
     </div>

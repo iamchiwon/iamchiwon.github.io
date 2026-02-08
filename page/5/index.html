@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2022/08/03/understanding-tdd/"><span>TDD 는 테스트를 먼저 만드는 것이 아니다</span></a></h3>
+    <h3 class="article-title"><a href="/2022/08/25/decision_to_test/"><span>테스트할 결심</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2022/08/03/understanding-tdd/" rel="bookmark">
-        <time class="entry-date published" datetime="2022-08-03T10:12:02.000Z">
-          2022-08-03
+      <a href="/2022/08/25/decision_to_test/" rel="bookmark">
+        <time class="entry-date published" datetime="2022-08-25T02:11:50.000Z">
+          2022-08-25
         </time>
       </a>
     </span>
@@ -103,36 +103,16 @@
   <div class="article-content">
     <div class="entry">
       
-        <p><img src="/images/dont_ear_before_sleep.jpg" alt="정신승리"></p>
-<ul>
-<li>구현을 합니다.</li>
-<li>테스트를 작성합니다.</li>
-<li>테스트가 잘 안됩니다.</li>
-<li>테스트를 만들기 위해 구현을 이것 저것 바꿉니다.</li>
-<li>테스트 합니다.</li>
-<li>잘 안됩니다.</li>
-<li>테스트를 작성하는데 구현보다 시간이 많이 걸립니다.</li>
-<li>하~ 이거 배보다 배꼽이 더 큰거 아닌가요?</li>
-</ul>
-<p>네. 배보다 배꼽이 더 크네요. 그럼 생각을 바꿔봅시다.<br>“<strong>난 원래 배꼽을 만들려는 거였어!</strong>“ 라고 정신승리를 해봅니다.</p>
-<hr>
-<h3 id="테스트는-언제-필요한건가"><a href="#테스트는-언제-필요한건가" class="headerlink" title="테스트는 언제 필요한건가?"></a>테스트는 언제 필요한건가?</h3><p>테스트는 코드를 검증하기 위해 만드는 거죠. 그러니까 코드를 작성하고 나서 검증을 위해 만들게 되죠.<br>하지만, 코드 만들고 실행해 보잖아요? 그래서 잘 돌아가는거 확인 하자나요?<br>그런데도 테스트 코드가 필요한 건가요?</p>
-<p><strong>테스트 코드는 코드가 변경될 때 필요한 겁니다.</strong></p>
-<p>이미 작성된 코드의 구현 내용이 변경될 때 테스트코드가 있어야 합니다.</p>
-<p>1.<code>리팩토링</code> : 동작은 동일하지만 코드가 달라진다.</p>
-<p>일단 코드를 변경하기 전에 정상동작하는 테스트를 만들어 놓고,<br>리팩토링을 합니다.<br>리팩토링이 완료된 후에도 기존 테스트가 정상동작 한다면, 잘 바꾼겁니다.</p>
-<p>2.<code>구현변경</code> : 요구사항이 변경되어 코드가 달라진다.</p>
-<p>일단 코드를 변경하기 전에 정상동작하는 테스트를 만들어 둡니다.<br>변경된 요구사항에 맞춰 올바르게 동작해야할 테스트로 변경해 줍니다.<br>이제 구현을 변경합니다.<br>구현수정 후 테스트가 정상동작 한다면, 잘 바꾼겁니다.</p>
-<hr>
-<blockquote>
-<p><strong>TDD</strong> 할 때는 코드 작성하기 전에 테스트를 먼저 만들라고 하지 않나요?</p>
+        <h1 id="TDD-의-목적"><a href="#TDD-의-목적" class="headerlink" title="TDD 의 목적"></a>TDD 의 목적</h1><blockquote>
+<p>The journey is the reward - sreve jobs</p>
 </blockquote>
-<p><code>구현변경</code> 케이스와 같습니다. 다만 변경 전의 코드가 ∅ 이었던 것 뿐입니다.<br><strong>TDD</strong>를 한다는 말은 정신승리 하자는 말입니다.</p>
-<hr>
-<p>코드를 작성했다면, 테스트 코드를 만들어서 검증하세요.<br>테스트 코드를 만드는데 불편한 것이 있다면, 테스트가 용이하도록 코드를 변경하세요.<br>테스트 코드를 만드는데 작성하기 어렵다면, 테스트 작성이 용이하도록 리팩토링 하세요.<br>코드 작성시간보다 테스트 코드 작성 시간이 더 많이 소모된다면, 정신승리 해보세요.</p>
-<p>“<strong>난 원래 테스트를 작성하려고 했던거야!</strong>“</p>
-<p>내가 작성하는 모든 설계와 구조와 코드가 테스트를 위한 것 같이 느껴 집니다.<br>마치 테스트가 나의 코드 생산 과정을 <code>주도(drive)</code> 하고 있네요!!</p>
-<p>네. 그것이 test에 의해 driven된 development (<code>테스트 주도개발</code>)인 것입니다.</p>
+<p>TDD 방법론은 <code>테스트 가능한 코드는 좋은 코드이다</code> 라는 것을 전제로 하고 있습니다.</p>
+<p>그렇기 때문에 Testibility 를 확보할 수 있도록 구현한다면 결국 좋은 설계를 얻게 될 것입니다.</p>
+<p>그렇게 얻은 좋은 설계와 구현체를 가지고 실제로 테스트를 하든지 말든지 알 바 아니고, 어쨌든 테스트 가능한 구조를 얻었다면 TDD가 의도한 목적을 달성했다 라고 볼 수 있다고 생각합니다.</p>
+<h3 id="좋은설계-설명하기"><a href="#좋은설계-설명하기" class="headerlink" title="좋은설계 설명하기"></a>좋은설계 설명하기</h3><p>좋은 설계를 말하기 위해 관심도를 분리하고, 추상화 하고 의존성을 낮추고 등등 언급하고 말해야 할 것들이 많습니다. 그렇다면 그것이 잘 되어 있는지 어떻게 측정하죠?<br>TDD에서는 그것을 testibility로 판가름 합니다.</p>
+<p>작성된 설계와 코드가 testible 합니까? 그렇다면 일단 나쁜 구조는 아니겠군요! 라고 말이죠.</p>
+<h3 id="좋은설계-유도하기"><a href="#좋은설계-유도하기" class="headerlink" title="좋은설계 유도하기"></a>좋은설계 유도하기</h3><p>그럼 testibility를 유지하면서 어떻게 코드를 만들어갈 것인가? test를 먼저 두고 개발을 시작하면 되죠!<br>네. 그것이 TDD 인 것입니다.</p>
+<h3 id="테스트할-결심"><a href="#테스트할-결심" class="headerlink" title="테스트할 결심"></a>테스트할 결심</h3><p>TDD하기로 했다는 것은 좋은 설계로 코드를 만들어 보겠다 혹은 그렇게 코드를 변경하기로 하겠다는 것을 의미합니다.<br>그러니까 테스트 하는데 불편한 것이 있다면 당연히 뜯어고치고 리팩토링 해서 테스트하기 편한 코드를 만들어 내야 합니다.<br>그 과정에서 얻게되는 testible한 구조와 설계가 바로 TDD의 목적이니까요!</p>
 
       
     </div>
@@ -145,13 +125,6 @@
     
 
     
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/tdd-test-driven-development-refactoring/">tdd, test driven development, refactoring</a>
-    </span>
-    
 
     </div>
 
@@ -160,7 +133,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2022/08/03/understanding-tdd/#comment">Comments</a>
+          <a href="/2022/08/25/decision_to_test/#comment">Comments</a>
         </span>
       </span>
     </div>
