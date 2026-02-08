@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2017/12/12/why-fp/"><span>Functional Programming, 왜 때문입니까?</span></a></h3>
+    <h3 class="article-title"><a href="/2017/12/20/immutable-and-struct/"><span>Immutable and struct in Swift</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2017/12/12/why-fp/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-12-12T02:34:25.000Z">
-          2017-12-12
+      <a href="/2017/12/20/immutable-and-struct/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-12-20T05:40:16.000Z">
+          2017-12-20
         </time>
       </a>
     </span>
@@ -103,19 +103,23 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>최근 Functional Programming (이후 FP) 이 많이 주목받고 있습니다. 최신 트랜드라고 합니다. 그렇다면 FP이 최신 기술인가요? 아닙니다<br>FP은 1950년대 후반 John McCarthy 의 Lisp 에서부터 출발합니다. 1950년대부터 있었다면 왜 이제서야 주목을 받게 되었을까요?<br>리얼리즘 프로그래머로써 FP을 훑어보려고 합니다.</p>
-<p>FP이 생기기 시작할 즈음에 Object-Oriented Programming (이후 OOP) 도 나타났습니다. 하지만 지금까지 널리 쓰였던 것은 OOP이었습니다.<br>OOP이 더 뛰어나서? 그렇다면 요즘 FP이 다시 주목받는 것과 모순이 됩니다.<br>저는 시대적 요구에 따라 선택되었다고 생각합니다. OOP가 널리 쓰이게 된 이유는 당시대의 시대적 요구가 OOP와 잘 맞았기 때문인거죠.<br>프로그램이 대량으로 생산되어야 하는 시대에 재사용성과 추상화가 요구되었고, OOP가 잘 맞아떨어졌던 것 뿐입니다.</p>
-<p>그럼 왜 이제와서 FP이 주목받나요? 시대적 요구가 달라진거죠. 멀티 쓰레드, 멀티 코어로 여러 프로그램들이 동시에 실행하고 분산 컴퓨팅으로 프로그램들이 비동기적으로 수행되는 시대 상황에서 FP 방식이 더 적합한 겁니다.<br>FP을 철저하게 연구하시는 분들은 거봐라 결국 이 방식이 옳았던 것이 아니냐 라고 말할 수도 있겠습니다. 최근에 생겨나는 Modern Programming Language들도 FP들을 지원하고 있습니다. 그래도 학자들 눈으로 볼 때는 성에 차지 않을 수도 있겠습니다.</p>
-<p>제가 볼 때는 FP이 요즘 환경에서 적합한 요소들이 있어 취사 선택되었을 뿐이라고 생각합니다. 언어는 그다지 중요하지 않습니다. 태생부터 Object-Oriented을 기반으로하는 Java로도 FP을 할 수 있습니다. FP의 이론과 그에 충실한 언어들은 사이언티스트들에게 맡기고, 리얼리즘 프로그래머인 저로써는 FP을 이해하고 장점만 적용할 수 있으면 그만입니다.</p>
-<p>제가 생각하는 FP의 장점들은 몇 가지로 요약할 수 있습니다.</p>
-<ul>
-<li>데이터 불변성</li>
-<li>순수 함수</li>
-<li>함수 합성</li>
-<li>고차 함수</li>
-<li>(1급 개체)</li>
-</ul>
-<p>천천히 이 장점들을 하나씩 포스팅 해보겠습니다.</p>
+        <p>swift 에서 struct 와 class 는 소스로 보면 형태와 쓰임 면에서 크게 다르지 않다. 그렇다면 무엇이 다르고 왜 필요하게 되었는지 생각해 보자.</p>
+<h2 id="Immutable-세상"><a href="#Immutable-세상" class="headerlink" title="Immutable 세상"></a>Immutable 세상</h2><p>메모리/데이터를 여러 프로그램이 동시에 접근하여 읽기/쓰기를 수행한다면 무결성을 어떻게 유지할 것인가?<br>이 문제를 해결하기 위한 방법으로 데이터를 immutable 하게 하여 읽기만 수행하고 쓰기를 금지시켰다. 변형된 데이터가 필요하다면 function 내에서 새로 생성된 데이터를 반환하면 된다. 이 방법은 아주 간단하면서도 문제의 근원을 해결해 주었다.</p>
+<p>예를 들어 배열에 1부터 10까지의 정수가 들어있는데, 홀수만 필터링된 배열이 필요하다면 새로운 배열을 만들고 기존 데이터에서 홀수만 넣고 새로운 배열을 생성하여 반환하면 된다. 이 데이터는 기존의 데이터와 다른 새로운 데이터이다. 따라서 새로운 데이터에 변형이 생겨도 원본 데이터에 영향을 주지 않는다.<br>하지만 메모리 효율성 측면에서 본다면 동일 데이터가 중복해서 생성되기 때문에 낭비가 발생한다. 방금 예를 들은 배열문제의 경우 다음과 같이 해결한다.</p>
+<p><img src="/images/array_clone.png"></p>
+<p>위 그림에서 보면 1에서 10까지의 원본 배열이 있고, 메모리에 생성되어 있다. 필터링된 새로운 배열이 만들어질 때 원본 데이터의 메모리 참조를 그대로 활용하여 새로 만들 수 있다. 메모리 측면에서는 손해보는 것 없고, 원본 데이터의 변형없이 새로운 배열이 만들어 졌다. 이 새로운 배열에 변형이 이뤄진다. 역시 변형된 새로운 배열이 만들어 지게 되고, 변형된 데이터만 메모리에 새로 추가되고 이를 참조한다. 새로운 배열이 총 3개가 만들어 졌지만 각각의 원본 배열에는 영향을 주지 않았고, 메모리도 효율적으로 관리되었다. 여기서 짚고 넘어갈 부분이 있는데, 나중에 생성된 2개의 배열은 원본배열을 참조하며 재배치된 참조배열이지 독립된 배열데이터는 아니다. 따라서 엄밀히 말해 이 2개의 배열은 새로운 데이터가 아니다. 새로운 데이터라면 별도의 메모리 영역을 차지하고 있어야 하는 것이다.</p>
+<p>Swift 에서 이와 같이 동작되는 것을 엿볼 수 있는데, 간단하게 Substring의 예 하나만 살펴보자. 그림에서 정수배열을 글자가 하나씩 담긴 배열로 만들어진 String 이라고 생각해 본다면 필터링된 배열은 Substring 으로 볼 수 있다. 이것은 원본 데이터가 조합된 레퍼런스 데이터지 별도의 독립 데이터가 아니다. 따라서 완전한 String이라고 할 수 없다. 그렇다면 독립된 String 과는 구분을 할 필요가 있으니 새로운 데이터 형으로 구분을 해 줄 필요가 있다.</p>
+<p><img src="/images/string_prefix.png"></p>
+<p>문자열의 첫 일부를 잘라내는 prefix 메소드를 보면 리턴타입이 Substring 으로 String 과 구분되어 있는 것을 볼 수 있고, Swift 에서도 이처럼 관리하고 있다는 것을 알 수 있다. Substring 으로 독립된 String 을 생성하려면 <code>String(&quot;1234567890&quot;.prefix(3))</code> 과 같은 명령으로 새로운 String 인스턴스를 만들어 줘야 한다.</p>
+<h2 id="struct-의-필요성"><a href="#struct-의-필요성" class="headerlink" title="struct 의 필요성"></a>struct 의 필요성</h2><p>immutable 데이터 세상에서 변형된 데이터를 얻기 위해서 기존 데이터를 복사할 필요가 있고, 이 과정에서 메모리 효율성을 얻는 방법을 살펴보았다. 만약 개발하는 모델 객체를 NSObject 를 상속받은 클래스로 만들었고, 이 모델 객체를 immutable 하게 처리한다면 데이터 변형을 위해 복사본을 만들 필요가 있다. 그리고 그것이 쉽지만은 않다. (자세한 설명은 생략한다. 직접 해보면 금방 알 수 있다.) 이러니 모델처럼 여러 데이터를 담고 있는 객체를 Int 나 Float 처럼 Call By Value 로 처리하는 방법이 필요하게 되었고 그래서 struct 가 필요한 것이다.</p>
+<p>struct 가 구조 데이터의 call by value 취급을 위해 필요하게 되었으니 당연히 struct 는 변수에 대입하면 값이 복사된다. 반대로 class 는 복사되지 않는다. (레퍼런스만 복사된다.)</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ReferenceObject</span> </span>&#123;&#125;</span><br><span class="line"><span class="keyword">let</span> classA <span class="operator">=</span> <span class="type">ReferenceObject</span>()</span><br><span class="line"><span class="keyword">let</span> classB <span class="operator">=</span> classA</span><br></pre></td></tr></table></figure>
+
+<p>이 코드에서 ReferenceObject 인스턴스는 1개 만들어 졌고, classA 와 classB 는 같은 인스턴스를 가리킨다. 레퍼런스만 복사되었으니까. 그래서 classB 의 값을 변경하면 classA에서 조회하는 값도 달라진다. call by reference 라고 한다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ValueObject</span> </span>&#123;&#125;</span><br><span class="line"><span class="keyword">let</span> valueA <span class="operator">=</span> <span class="type">ValueObject</span>()</span><br><span class="line"><span class="keyword">let</span> valueB <span class="operator">=</span> valueA</span><br></pre></td></tr></table></figure>
+
+<p>이 코드에서 ValueObject 인스턴스는 2개 만들어 졌고, valueA 와 valueB 는 복사본으로 내용은 같지만 다른 인스턴스다. 그래서 valueB 의 값을 변경해도 valueA 의 값이 영향받지 않는다. call by value 라고 한다.</p>
+<h2 id="급-마무리"><a href="#급-마무리" class="headerlink" title="(급) 마무리"></a>(급) 마무리</h2><p>immutable 관점에서 보면 struct 의 필요성은 당연하다. 그러한 이유로 만들어 졌으니 그러한 용도로 사용하면 된다. 차이점과 존재 이유를 알았으니 ‘어떨 때 뭘 써야하나요?’ 같은 문의도 당연히 해결될 것이다.</p>
 
       
     </div>
@@ -132,7 +136,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/왜-함수형-프로그래밍-Functional-Programming-Functional-History/">왜, 함수형 프로그래밍, Functional Programming, Functional, History</a>
+        <a href="/tags/immutable-struct-class/">immutable, struct, class</a>
     </span>
     
 
@@ -143,7 +147,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2017/12/12/why-fp/#comment">Comments</a>
+          <a href="/2017/12/20/immutable-and-struct/#comment">Comments</a>
         </span>
       </span>
     </div>

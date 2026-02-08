@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2018/03/10/what-fp/"><span>Functional Programming이 뭐하는 건가요?</span></a></h3>
+    <h3 class="article-title"><a href="/2018/03/21/why-curry/"><span>Curry 해서 어디다 씁니까?</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2018/03/10/what-fp/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-03-09T19:44:10.000Z">
-          2018-03-10
+      <a href="/2018/03/21/why-curry/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-03-21T09:33:34.000Z">
+          2018-03-21
         </time>
       </a>
     </span>
@@ -103,10 +103,28 @@
   <div class="article-content">
     <div class="entry">
       
-        <p><a target="_blank" rel="noopener" href="https://iosdevkor.github.io/let_us_go_2018_spring_review/">let us: Go! 2018 봄</a><br>세미나에서 발표한 내용</p>
-<iframe src="//www.slideshare.net/slideshow/embed_code/key/lkv1xJyzQSPORK" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/ChiwonSong/20180310-functional-programming" title="20180310 functional programming" target="_blank">20180310 functional programming</a> </strong> </div>
+        <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f</span>&lt;<span class="type">A</span>, <span class="type">B</span>, <span class="type">C</span>, <span class="type">D</span>&gt;(<span class="keyword">_</span> <span class="params">a</span>: <span class="type">A</span>, <span class="keyword">_</span> <span class="params">b</span>: <span class="type">B</span>, <span class="keyword">_</span> <span class="params">c</span>: <span class="type">C</span>)</span> -&gt; <span class="type">D</span> &#123;</span><br><span class="line">	<span class="operator">....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/HZkqMiwT-5A" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<p>인자를 3개 받는 함수가 f 가 Currying 되면 이렇게 된다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f</span>&lt;<span class="type">A</span>, <span class="type">B</span>, <span class="type">C</span>, <span class="type">D</span>&gt;(<span class="keyword">_</span> <span class="params">a</span>: <span class="type">A</span>)</span> -&gt; (<span class="type">B</span>) -&gt; (<span class="type">C</span>) -&gt; <span class="type">D</span> &#123;</span><br><span class="line">	<span class="operator">....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>결국 Currying 은 <code>인자 여러개의 함수 하나를 인자 하나짜리 함수 여러개로 쪼개는 것이다.</code></p>
+<p>예제같은 것은 조금만 검색해 보면 많이 찾아볼 수 있으니 생략한다.</p>
+<p>그보다 왜 커링을 하는지 알아보자.</p>
+<p><strong>1. 기능 쪼개기</strong></p>
+<p>여러 조건을 인자로 받아서 한번에 처리하는 함수를 커링하면, 각 조건에 따라 별도로 중간 함수를 만들 수 있다. </p>
+<p>동일 인자를 계속 반복해서 입력하게 되는 경우가 생기면, 반복되는 인자를 미리 주입시킨 중간함수를 만들어서 재사용 할 수 있다.</p>
+<p>(장점이긴 하지만, 뭐 그리 크게 매력적이진 않다.)</p>
+<p><strong>2. 함수 합성</strong></p>
+<p>커링의 이유는 결국 함수 합성 때문이다. 어떤 함수의 output 이 다른 함수의 input에 입력되면서 함수가 합성이 이루어 지는데, output 은 값이 하나다.</p>
+<p>(여러개 output 을 하는 경우는 없다. 있다면 그것은 여러개 값을 튜플로 만들어 튜플 한 개를 전달하는 것이다.)</p>
+<p>그러니까 다른 함수의 output 을 받아 합성이 잘 이루어 지려면 input 도 하나여야 한다. 그러니까 인자 하나짜리 함수를 만들어야 한다. 그러니 필요에 의해서 Currying 이 필요하게 된다.</p>
+<h3 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h3><ul>
+<li>커링은 인자 여러개 함수 하나를, 인자 하나짜리 여러개 함수로 쪼개는 것이다.</li>
+<li>이것은 함수의 합성을 잘 써먹기 위해서 필요하다.</li>
+<li>그래서 함수를 만들때는 커링을 고려해서 인자의 순서를 잘 설계해야 한다.</li>
+</ul>
+
       
     </div>
 
@@ -118,13 +136,6 @@
     
 
     
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/Functional-Progarmming/">Functional Progarmming</a>
-    </span>
-    
 
     </div>
 
@@ -133,7 +144,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2018/03/10/what-fp/#comment">Comments</a>
+          <a href="/2018/03/21/why-curry/#comment">Comments</a>
         </span>
       </span>
     </div>

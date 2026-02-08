@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2018/12/20/visit-toss/"><span>TOSS 방문기</span></a></h3>
+    <h3 class="article-title"><a href="/2018/12/26/starting-rxswift3/"><span>쉽게 배우는 RxSwift (#3) - stream</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2018/12/20/visit-toss/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-12-20T03:04:19.000Z">
-          2018-12-20
+      <a href="/2018/12/26/starting-rxswift3/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-12-26T08:17:33.000Z">
+          2018-12-26
         </time>
       </a>
     </span>
@@ -103,31 +103,36 @@
   <div class="article-content">
     <div class="entry">
       
-        <h1 id="초대"><a href="#초대" class="headerlink" title="초대"></a>초대</h1><p>갑자기 뜬금없이 애니옵젝님의 초대+연화님의 낚시로 TOSS를 방문하게 되었습니다.</p>
-<p>우선 인증샷!</p>
-<p><img src="/images/20181220/toss_photo_1.jpg"></p>
-<p>역삼역 3번출구 바로 앞에 있는 큰 건물의 12층에 위치하고 있습니다.</p>
+        <h3 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h3><ol>
+<li>RxSwfit의 데이터 흐름을 <code>stream</code>이라고 합니다.</li>
+<li><strong>Observable</strong>은 <code>stream</code>으로써 종단에는 <strong>subscribe</strong> 하여 사용합니다.</li>
+<li><strong>subscribe</strong>가 없으면 <strong>Observable</strong>은 동작하지 않습니다.</li>
+<li><code>stream</code>에 흐르는 동안에 <strong>Operator</strong>를 통해서 데이터를 조작할 수 있습니다.</li>
+</ol>
 <br/>
 
-<h1 id="저녁식사"><a href="#저녁식사" class="headerlink" title="저녁식사"></a>저녁식사</h1><p>애니옵젝님이 마법카드로 쏘는 저녁을 먹었습니다. 법카의 영향력으로 식사 내내 회사의 자랑을 들어야 했습니다. </p>
-<p>많은 얘기가 있었지만, 길어서 생략.. 결론은 좋은 회사, 더욱 더 성장할 회사 입니다.<br>지원은 여기로. <a target="_blank" rel="noopener" href="https://career.toss.im/">https://career.toss.im/</a></p>
+<h3 id="Everything-is-stream"><a href="#Everything-is-stream" class="headerlink" title="Everything is stream"></a>Everything is <code>stream</code></h3><p>RxSwift 는 비동기 처리를 지원합니다.<br>그 처리의 중심에는 <code>stream</code> 이 있습니다.<br><code>stream</code>은 데이터의 흐름입니다.</p>
+<p>데이터의 발생(Generator)부터 데이터의 소비(Consumer)까지 데이터가 흐르는 통로를 만들고, 이 통로를 통해서 데이터를 전달하겠다는 아이디어 입니다.</p>
+<p>생각해보면, 미래에 발생하는 것이 데이터이건, 이벤트 이건, 사용자 입력이던 구분될 필요는 없습니다. 무엇이든 나중에 비동기 적으로 발생하는 (통칭)정보를 나중에 누군가 필요한 곳(Consumer)에 전달하겠다는 의미는 동일합니다.</p>
 <br/>
 
-<h1 id="방문"><a href="#방문" class="headerlink" title="방문"></a>방문</h1><p>12층에 올라가면 로비와 TOSS 로고가. 안에는 커피숍이 맞아줍니다. 바리스타님의 커피를 얻어 먹고 사무실을 둘러 봅니다.</p>
-<p>사무실 중앙에 있는 계단으로 위층으로 올라가면, 독서실 열람식 같이 넓게 펼쳐진 공간, 한쪽에는 편의점을 옮겨놓은 탕비실 이 있습니다. 파노라마 사진 첨부합니다.</p>
-<p><img src="/images/20181220/toss_photo_2.jpg"><br><a href="/images/20181220/toss_photo_3.jpg">크게보기</a></p>
-<p>계획없이 방문한거라, 사진은 이게 전부 입니다.</p>
+<h3 id="Observable-➜-subscribe"><a href="#Observable-➜-subscribe" class="headerlink" title="Observable ➜ subscribe"></a>Observable ➜ subscribe</h3><p>그러니까 발생에서 -&gt; 소비까지를 서로 연결해서 흐르는 통로만 만들어 주면 되는 것입니다. 이러한 통로를 <code>stream</code> 이라고 합니다.</p>
+<p>RxSwift 에서는 이러한 <code>stream</code>을 <strong>Observable</strong> 이라고 합니다. <strong>Observable</strong> (혹은 <strong>ObservableType</strong>) 은 <code>stream</code> 으로 데이터의 흐름을 의미합니다.</p>
+<p>이 <code>stream</code>은 분기될 수도 있고, 합칠 수도 있습니다. <br/>그리고 그 중간에서 데이터를 변경시키거나 조작할 수도 있습니다. 그리고 그 여정의 끝은 <strong>subscribe</strong>입니다.</p>
+<p><code>stream</code>의 끝에서 <strong>subscribe</strong>함으로써 그 데이터를 사용(Consume)할 수 있습니다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Observable -&gt; (stream) -&gt; subscribe</span><br></pre></td></tr></table></figure>
+
+<p>lazy하게 동작하기 위해서 <strong>subscribe</strong>이 되지 않으면 그 <code>stream</code>은 흐르지 않습니다. 그래서 <strong>Observable</strong>만 잔뜩 만들어 놓는다고 해도 subscribe하지 않으면 동작하지 않습니다.</p>
+<p><code>stream</code>의 중간에서 데이터를 빼내서 사용하지는 못합니다. 사용하고자 하는 데이터는 모두 <strong>subscribe</strong>을 통해서만 사용하게 됩니다.</p>
+<p>서두에 언급한 것 처럼, 데이터나 이벤트나 사용자 입력등을 RxSwift를 사용해서 처리하겠다고 한다면 최종으로 사용할 곳 까지 <code>stream</code>을 연결시키는 것이 RxSwift 프로그래밍 입니다.</p>
 <br/>
 
-<h1 id="대화"><a href="#대화" class="headerlink" title="대화"></a>대화</h1><p>한 쪽 방에 들어가서 소소한 대화를 나누었습니다.</p>
-<p>회사의 비전, 개발자의 미래, 심오한 기술의 세계, 지구환경, 세계평화.. 이런 주제는 없었구요, 정말 별 얘기 없었네요..</p>
-<p>애니옵젝님이 노란회사에서 토스로 옮기게 된 계기와 과정을 (중간에 대화가 자꾸 삼천포로 빠져서) 길게 들었고, 그냥 이직 얘기 입니다.</p>
-<p>회사를 옮기고 나서의 느낌은 규칙이 덜하고 더 자유롭지만, 전체가 맞물려 돌아가는 응집력은 훨씬 강하게 느낀다고 합니다. 아주 만족하고 즐겁게 일하고 있답니다.</p>
+<h3 id="Stream-Example"><a href="#Stream-Example" class="headerlink" title="Stream Example"></a>Stream Example</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@IBOutlet</span> <span class="keyword">var</span> plusButton: <span class="type">UIButton</span>!</span><br><span class="line"><span class="keyword">@IBOutlet</span> <span class="keyword">var</span> minusButton: <span class="type">UIButton</span>!</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> stream1 <span class="operator">=</span> plusButton.rx.tap</span><br><span class="line">  .throttle(<span class="number">0.5</span>, latest: <span class="literal">false</span>, scheduler: <span class="type">MainScheduler</span>.instance)</span><br><span class="line">  .map &#123; <span class="keyword">_</span> <span class="keyword">in</span> <span class="number">1</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> stream2 <span class="operator">=</span> minusButton.rx.tap</span><br><span class="line">  .throttle(<span class="number">0.5</span>, latest: <span class="literal">false</span>, scheduler: <span class="type">MainScheduler</span>.instance)</span><br><span class="line">  .map &#123; <span class="keyword">_</span> <span class="keyword">in</span> <span class="operator">-</span><span class="number">1</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Observable</span>.merge(stream1, stream2)</span><br><span class="line">  .subscribe(onNext: addCounting)</span><br><span class="line">  .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+
+<p>여기서 버튼의 tap 이벤트를 0.5초동안 반복터치를 배제하면서 받아들여 +1과 -1로 변형하고 있습니다.<br/><br>이 각각의 <code>stream</code> 흐름을 하나로 합쳐서(merge) 사용(subscribe)하는 것을 볼 수 있습니다.</p>
 <br/>
 
-<h1 id="후기"><a href="#후기" class="headerlink" title="후기"></a>후기</h1><p>방문을 한 번 하고나니, 다른 회사들도 방문을 하면서 기록을 남기는 것도 재밌겠다 싶은 생각이 드네요. 그래서 이제는 계획을 세우고, 인터뷰 준비도 해서 다른 회사들 방문을 해보고 싶다 라는 생각이 들었습니다.</p>
-<p>일상을 기록하지 않는 초보 <a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCsrPur3UrxuwGmT1Jq6tkQw">유튜버</a>이다보니 영상은 커녕 사진찍을 생각을 못했는데, 유튜브 시리즈 컨텐츠로 방문기를 만드는 것도 재밌겠다는 생각을 했습니다.</p>
-<p>다 쓰고 나니 진짜 별 내용 없네요.. 쩝~</p>
+<h3 id="next-Operator"><a href="#next-Operator" class="headerlink" title="next: Operator"></a>next: <strong>Operator</strong></h3><p><strong>map</strong> 이나 <strong>throttle</strong> 의 생소한 것이 나왔습니다. 대충 살펴봤을 때 <code>stream</code>에 흘러가는 데이터에 조작을 가하는 것으로 보여집니다. 이처럼 흘러가는 데이터를 조작하는 것을 <strong>Operator</strong> 라고 합니다.<br/><br>다음에는 이 <strong>Operator</strong> 를 살펴보겠습니다.</p>
 
       
     </div>
@@ -144,7 +149,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/visit-toss-rx-연화-애니옵젝/">visit, toss, rx, 연화, 애니옵젝</a>
+        <a href="/tags/rxswift-stream/">rxswift, stream</a>
     </span>
     
 
@@ -155,7 +160,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2018/12/20/visit-toss/#comment">Comments</a>
+          <a href="/2018/12/26/starting-rxswift3/#comment">Comments</a>
         </span>
       </span>
     </div>
