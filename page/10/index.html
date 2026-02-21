@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2021/05/17/programming-mania/"><span>개발덕후는 협업을 잘 할까</span></a></h3>
+    <h3 class="article-title"><a href="/2022/08/03/understanding-tdd/"><span>TDD 는 테스트를 먼저 만드는 것이 아니다</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2021/05/17/programming-mania/" rel="bookmark">
-        <time class="entry-date published" datetime="2021-05-17T08:18:00.000Z">
-          2021-05-17
+      <a href="/2022/08/03/understanding-tdd/" rel="bookmark">
+        <time class="entry-date published" datetime="2022-08-03T10:12:02.000Z">
+          2022-08-03
         </time>
       </a>
     </span>
@@ -103,41 +103,36 @@
   <div class="article-content">
     <div class="entry">
       
-        <h2 id="개발-덕후의-이미지"><a href="#개발-덕후의-이미지" class="headerlink" title="개발 덕후의 이미지"></a>개발 덕후의 이미지</h2><p><img src="/images/programmers_corona.jpg" alt="programmers_in_corona"></p>
-<p>개발 덕후는 어떤 이미지 입니까?</p>
-<p>개발하는 것이 너무 재밌어서 날 새는 줄 모르고 밤새 코딩하는 덕후. 어떤 실용적이지도 않은 프로그램을 만들면서 모니터에 흘러가는 알 수 없는 숫자들에 기뻐하는 모습. 어두운 방의 유일한 모니터 불빛에 비치는 가녀린 팔의 창백한 피부를 가진 안경잡이. (여자친구가 있는지도 모르겠지만) 여자친구의 “12/24이 뭔지 알지?”라고 할 때 ‘0.5’라고 답하는 센스.</p>
-<p>어디서부터 잘못된 것인지, 개발 덕후들에게 이런 이미지가 덧씌워져 있습니다. 진짜 그런가요?</p>
-<br/>
-
-<h2 id="협업과-커뮤티케이션이-개발의-중요한-요소라는데"><a href="#협업과-커뮤티케이션이-개발의-중요한-요소라는데" class="headerlink" title="협업과 커뮤티케이션이 개발의 중요한 요소라는데"></a>협업과 커뮤티케이션이 개발의 중요한 요소라는데</h2><p>개발뿐 아니라 여럿이 함께 일을 하는 모든 일이 그렇겠지만, 개발에서는 협업과 커뮤니케이션이 굉장히 중요합니다. 요즘의 프로젝트는 혼자서 개발을 모두 할 수 있을 만큼의 규모와 복잡도를 훨씬 넘어서기 때문입니다.</p>
-<p>그래서 개발자들에게 커뮤니케이션을 요구하는 것이 당연합니다. 그런데, 마치 어려운 것을 요구하는 듯이 조심스러워하고, 기술과 함께 커뮤니케이션도 익혀야 할 스킬이라며 특별한 훈련을 요구하기도 합니다.</p>
-<p>아마도 개발덕후들의 이미지가 연상되어 개발자들은 커뮤니케이션에 어려움이 있을 것이라는 선입견이라도 가진 것 같습니다.</p>
-<br/>
-
-<h2 id="Rock-Band"><a href="#Rock-Band" class="headerlink" title="Rock Band"></a>Rock Band</h2><p>기타 치는 것을 좋아하는 아이는 그것이 너무 재밌어서 매일매일 연주를 합니다. 좋아하는 음악가의 연주를 흉내 내고, 자기만의 것을 만들어 가며 자신만의 음악세계에 심취합니다.</p>
-<p>그러다가 결국 밴드를 결성하게 됩니다. 혼자서 연주하는 것보다 여럿이 연주하는 것이 더 재밌다는 것을 알고 있으니까요. 여러 악기가 모이면 더 풍성하고 멋진 소리를 낼 수 있다는 것을 알고 있으니까요.</p>
-<p>밴드 단원을 모집하고, 서툴게 화음을 만들어 가는 것부터 시작해서 여러 시행착오를 거쳐 결국 멋진 소리를 만들어 냅니다. 그 과정에서 여러 번의 단원 교체도 있었고, 추구하는 음악세계에 대해 깊은 토론도 있었습니다. 이 과정이 모두 밴드를 만들어 가는 과정이고, 좋은 음악을 만들어 가는 과정입니다. 그리고 그 과정에서 멋진 음악을 만드는 밴드가 되려면 어떤 커뮤니케이션이 있어야 하는지 자연스럽게 알게 됩니다.</p>
-<br/>
-
-<h2 id="Code-Crew"><a href="#Code-Crew" class="headerlink" title="Code Crew"></a>Code Crew</h2><p>개발을 즐기는 덕후는 곧 알게 될 겁니다. 더 멋지고 쓸만한 프로그램을 만들려면 크루가 필요하다는 것을요. 덕후는 덕질을 하면 할수록 크루들과 함께 협업하는 것을 더욱 배우게 되고 점점 잘하게 됩니다.</p>
-<p>커뮤니케이션은 개발자가 익혀야 할 특별한 스킬이나 스펙이 아닙니다. 단기간에 억지로 훈련시킬 수 있는 것도 아닙니다. 개발 덕후에게는 더 좋은 프로그램을 만드는 자연스러운 과정입니다.</p>
-<br/>
-
-<h2 id="새로운-개발자의-이미지"><a href="#새로운-개발자의-이미지" class="headerlink" title="새로운 개발자의 이미지"></a>새로운 개발자의 이미지</h2><p>실제 개발자들은, <del>어디서부터 잘못되었는지,</del> 잘못된 개발덕후의 선입견과는 매우 다릅니다. 자신이 좋아하는 것에 순수하게 열정을 가지고, 몰두할 수 있는 사람들입니다. 함께 일하는 동료들과 협업하며 더 좋은 프로그램을 만들어갈 수 있는 사람들입니다. 혼자서 일하기보다는 크루의 일원으로써 일하기를 좋아하는 사람들입니다. 밝고 농담을 잘하고 (의외로) 활발한 사람들입니다.</p>
-<p>모든 개발자가 그런가요?</p>
-<p>아니요! 크루들과 개발을 하며 <code>함께</code> 개발하는 것의 재미를 아는 개발자, 그런 경험이 있었던 개발자들입니다. 제가 좋아하는 <code>개발덕후</code>들 입니다.</p>
-<br/>
-
-<h2 id="급-마무리"><a href="#급-마무리" class="headerlink" title="급 마무리"></a>급 마무리</h2><p>두서 없이, 그냥 생각나는 대로 끄적이다가 어떻게 마무리해야 할지 몰라서 갑자기 결론을 냅니다.</p>
+        <p><img src="/images/dont_ear_before_sleep.jpg" alt="정신승리"></p>
+<ul>
+<li>구현을 합니다.</li>
+<li>테스트를 작성합니다.</li>
+<li>테스트가 잘 안됩니다.</li>
+<li>테스트를 만들기 위해 구현을 이것 저것 바꿉니다.</li>
+<li>테스트 합니다.</li>
+<li>잘 안됩니다.</li>
+<li>테스트를 작성하는데 구현보다 시간이 많이 걸립니다.</li>
+<li>하~ 이거 배보다 배꼽이 더 큰거 아닌가요?</li>
+</ul>
+<p>네. 배보다 배꼽이 더 크네요. 그럼 생각을 바꿔봅시다.<br>“<strong>난 원래 배꼽을 만들려는 거였어!</strong>“ 라고 정신승리를 해봅니다.</p>
+<hr>
+<h3 id="테스트는-언제-필요한건가"><a href="#테스트는-언제-필요한건가" class="headerlink" title="테스트는 언제 필요한건가?"></a>테스트는 언제 필요한건가?</h3><p>테스트는 코드를 검증하기 위해 만드는 거죠. 그러니까 코드를 작성하고 나서 검증을 위해 만들게 되죠.<br>하지만, 코드 만들고 실행해 보잖아요? 그래서 잘 돌아가는거 확인 하자나요?<br>그런데도 테스트 코드가 필요한 건가요?</p>
+<p><strong>테스트 코드는 코드가 변경될 때 필요한 겁니다.</strong></p>
+<p>이미 작성된 코드의 구현 내용이 변경될 때 테스트코드가 있어야 합니다.</p>
+<p>1.<code>리팩토링</code> : 동작은 동일하지만 코드가 달라진다.</p>
+<p>일단 코드를 변경하기 전에 정상동작하는 테스트를 만들어 놓고,<br>리팩토링을 합니다.<br>리팩토링이 완료된 후에도 기존 테스트가 정상동작 한다면, 잘 바꾼겁니다.</p>
+<p>2.<code>구현변경</code> : 요구사항이 변경되어 코드가 달라진다.</p>
+<p>일단 코드를 변경하기 전에 정상동작하는 테스트를 만들어 둡니다.<br>변경된 요구사항에 맞춰 올바르게 동작해야할 테스트로 변경해 줍니다.<br>이제 구현을 변경합니다.<br>구현수정 후 테스트가 정상동작 한다면, 잘 바꾼겁니다.</p>
+<hr>
 <blockquote>
-<p>개발 덕후는 개발을 좋아합니다.<br>그래서 커뮤니케이션도 잘 합니다.<br>개발자는 개발 덕후가 되어야 합니다.</p>
+<p><strong>TDD</strong> 할 때는 코드 작성하기 전에 테스트를 먼저 만들라고 하지 않나요?</p>
 </blockquote>
-<br/>
-
-<p>마지막으로 생각나는 노래하나 링크 걸면서 갑자기, 끝.</p>
-<br/>
-
-<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=i-n9cOWG6vQ&list=PL3XTcY3NgAfHJn8C9KbxuGcUKsdu74suI&index=4"><img src="https://img.youtube.com/vi/i-n9cOWG6vQ/0.jpg" alt="Youtube Link"></a><br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=i-n9cOWG6vQ&list=PL3XTcY3NgAfHJn8C9KbxuGcUKsdu74suI&index=4">자우림 - 애인발견</a></p>
+<p><code>구현변경</code> 케이스와 같습니다. 다만 변경 전의 코드가 ∅ 이었던 것 뿐입니다.<br><strong>TDD</strong>를 한다는 말은 정신승리 하자는 말입니다.</p>
+<hr>
+<p>코드를 작성했다면, 테스트 코드를 만들어서 검증하세요.<br>테스트 코드를 만드는데 불편한 것이 있다면, 테스트가 용이하도록 코드를 변경하세요.<br>테스트 코드를 만드는데 작성하기 어렵다면, 테스트 작성이 용이하도록 리팩토링 하세요.<br>코드 작성시간보다 테스트 코드 작성 시간이 더 많이 소모된다면, 정신승리 해보세요.</p>
+<p>“<strong>난 원래 테스트를 작성하려고 했던거야!</strong>“</p>
+<p>내가 작성하는 모든 설계와 구조와 코드가 테스트를 위한 것 같이 느껴 집니다.<br>마치 테스트가 나의 코드 생산 과정을 <code>주도(drive)</code> 하고 있네요!!</p>
+<p>네. 그것이 test에 의해 driven된 development (<code>테스트 주도개발</code>)인 것입니다.</p>
 
       
     </div>
@@ -154,7 +149,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/programming-mania-cowork/">programming, mania, cowork</a>
+        <a href="/tags/tdd-test-driven-development-refactoring/">tdd, test driven development, refactoring</a>
     </span>
     
 
@@ -165,7 +160,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2021/05/17/programming-mania/#comment">Comments</a>
+          <a href="/2022/08/03/understanding-tdd/#comment">Comments</a>
         </span>
       </span>
     </div>

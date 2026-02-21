@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2019/06/05/xcode11/"><span>XCode11로 넘겨짚기</span></a></h3>
+    <h3 class="article-title"><a href="/2019/06/10/should-see-wwdc2016/"><span>WWDC2019 여파가 크네</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2019/06/05/xcode11/" rel="bookmark">
-        <time class="entry-date published" datetime="2019-06-05T08:59:06.000Z">
-          2019-06-05
+      <a href="/2019/06/10/should-see-wwdc2016/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-06-10T07:05:46.000Z">
+          2019-06-10
         </time>
       </a>
     </span>
@@ -103,35 +103,12 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>(내피셜입니다. 그냥 념겨짚는 거니까 딴지 노노요)</p>
-<p><img src="/images/xcode11/xcode11_icon.png" alt="icon"></p>
-<p>XCode11 을 설치해 봤습니다. 베타 버전이죠. <strike>10버전도 아직 안정화 되지 않았다고 생각했는데..</strike></p>
-<p>일단 프로젝프를 만들어 봅니다.</p>
-<p><img src="/images/xcode11/NewProject_SwiftUI.png" alt="new project"></p>
-<p>SwiftUI 를 사용할꺼냐는 체크가 있습니다.<br>전세계 개발자들이 깜놀하고 환영했건 그것! 사용할 수가 있겠습니다. (애플 칭찬해~)</p>
-<p><img src="/images/xcode11/FileTree.png" alt="source tree"></p>
-<p>프로젝트가 만들어지고 난 후에 보니, Main.storyboard가 없습니다. SwiftUI를 쓰면 스토리 보드로 시작되지 않아서 없는가 봅니다.<br>SwiftUI 를 체크 해제하고 프로젝트를 만들어 보면, 스토리 보드 나옵니다~</p>
-<p>그리고 못보던 파일이 있습니다. <code>SceneDelegate.swift</code> 이게 뭐냐?</p>
-<p>소스는 이렇습니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SceneDelegate</span>: <span class="title">UIResponder</span>, <span class="title">UIWindowSceneDelegate</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> window: <span class="type">UIWindow</span>?</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">scene</span>(<span class="keyword">_</span> <span class="params">scene</span>: <span class="type">UIScene</span>, <span class="params">willConnectTo</span> <span class="params">session</span>: <span class="type">UISceneSession</span>, <span class="params">options</span> <span class="params">connectionOptions</span>: <span class="type">UIScene</span>.<span class="type">ConnectionOptions</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> window <span class="operator">=</span> <span class="type">UIWindow</span>(frame: <span class="type">UIScreen</span>.main.bounds)</span><br><span class="line">        window.rootViewController <span class="operator">=</span> <span class="type">UIHostingController</span>(rootView: <span class="type">ContentView</span>())</span><br><span class="line">        <span class="keyword">self</span>.window <span class="operator">=</span> window</span><br><span class="line">        window.makeKeyAndVisible()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">sceneDidBecomeActive</span>(<span class="keyword">_</span> <span class="params">scene</span>: <span class="type">UIScene</span>)</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">sceneWillEnterForeground</span>(<span class="keyword">_</span> <span class="params">scene</span>: <span class="type">UIScene</span>)</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">sceneWillResignActive</span>(<span class="keyword">_</span> <span class="params">scene</span>: <span class="type">UIScene</span>)</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">sceneDidEnterBackground</span>(<span class="keyword">_</span> <span class="params">scene</span>: <span class="type">UIScene</span>)</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">sceneDidDisconnect</span>(<span class="keyword">_</span> <span class="params">scene</span>: <span class="type">UIScene</span>)</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>UIWindow</code> 를 가지고 있네요. <code>AppDelegate</code> 가 가지고 있었는데.. 그리고 API를 대충 보니 window의 Life-Cycle을 관리하는 놈으로 보입니다.<br>그렇다면 <code>AppDelegate</code> 에서는 어플리케이션의 라이프사이클을 관리하고, <code>SceneDelegate</code>에서는 window의 라이프사이클을 관리하나 봅니다.</p>
-<p>아마도 window가 여러개가 되는 경우를 위한것이 아닐까? 통밥을 굴려 예상해 봅니다. 아마도 iPadOS 에서 앱의 동시실행이 강화되어서 같은 앱도 여러개 창이 실행되니까 window가 여러개 뜨는 가 봅니다. 아마 이거 관리하는 것 같습니다.</p>
-<p>그러면, 앱이 여러개 뜰 때 각 윈도우에서 서로 다른 화면을 보이더라도 비지니스 로직은 공유시켜야 하니까.. 앞으로는 앱 개발할 때 잘 구분해서 개발하는게 필요할 것 같아 보이네요.<br><strike>대충 할 수 없게 만들어 버렸네..</strike></p>
-<p>그럼 <code>AppDelegate</code> 에도 뭔가 변화가 있지 않을까 해서 살펴봅니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@UIApplicationMain</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppDelegate</span>: <span class="title">UIResponder</span>, <span class="title">UIApplicationDelegate</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">application</span>(<span class="keyword">_</span> <span class="params">application</span>: <span class="type">UIApplication</span>,</span></span><br><span class="line"><span class="function">                     <span class="params">configurationForConnecting</span> <span class="params">connectingSceneSession</span>: <span class="type">UISceneSession</span>,</span></span><br><span class="line"><span class="function">                     <span class="params">options</span>: <span class="type">UIScene</span>.<span class="type">ConnectionOptions</span>)</span> -&gt; <span class="type">UISceneConfiguration</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">UISceneConfiguration</span>(name: <span class="string">&quot;Default Configuration&quot;</span>,</span><br><span class="line">                                    sessionRole: connectingSceneSession.role)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>쓸데없는 부분은 지웠어요. 결국 새로운게 나오네요. Scene을 관리하나 봅니다.<br>멀티 Scene을 지원하려면 여기서 뭔가 하면 될 것 같네요.</p>
-<p>그리고 소스창을 보다보니 못보던게 나왔습니다.</p>
-<p><img src="/images/xcode11/SourceMiniMap.png" alt="minimap"></p>
-<p>소스 미니맵입니다. 현재 커서 위치랑, <code>// MARK:</code> 까지 잘 표현해주네요. 이런 기능 좋습니다.</p>
-<p>그리고 저는 <a target="_blank" rel="noopener" href="https://draculatheme.com/">드라큐라 테마</a>를 사용하고 있었는데, 색깔이 좀 다르더라구요. 보니까 Default 테마 색깔이 달라졌습니다. 맘에 듭니다. 깔끔하네요.</p>
-<p>마지막으로 시뮬레이터 실행해 봅니다. iOS13 으로 뜹니다.<br>다크모드 해봐야죠!<br>어디서 하는지 몰라 한참 해맸습니다.</p>
-<p><img src="/images/xcode11/iOS13_Simulator_Darkmode.png" alt="dark mode"></p>
-<p><strong>설정 &gt; 개발자 모드</strong> 에서 하는 거였드라구요.</p>
-<hr>
-<p>이렇게 대충 xcode11 을 살펴보고 대충 넘겨짚어 봤습니다. SwiftUI 로 코딩하고 빌드하고 실행까지 잘 되는데, MacOS 가 10.15가 아니면 LiveView 는 안되더라구요.</p>
-<p>OS를 베타로 깔고싶지 않아서 10.15는 안깔겠습니다.</p>
-<p>끝.</p>
+        <p><img src="/images/sexy_ios_13.jpeg" alt="sexy iOS13"></p>
+<p>이번 <a target="_blank" rel="noopener" href="https://developer.apple.com/videos/wwdc2019/">WWDC 2019</a> 에서 발표된 내용들이 오랜 정체기를 깨는 깜놀할 만한 것들이 많아서 개발자들은 신나했고 일부는 또 새운것 것이냐며 두려워 했다.</p>
+<p><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2019/216">SwiftUI</a>라던지 <a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2019/721/">Combine</a>같은 것들이 새롭고 또한 그동안의 가려운 곳을 긁어주는 것이어서 매우 반가운 소식이기는 하지만, 사실주의 프로그래머 입장에서 봤을 때는 아직 갈 길이 아직 많이 남았다고 생각한다.</p>
+<p>왜냐하면 이번에 소개된 새로운 것들이 모두 iOS13을 기반으로만 동작하기 때문이다. 실제 iOS 프로덕트를 만드는 개발자들은 iOS13이 나왔다고 해서 minSDK 버전을 13으로 맞추지 않는다. 보통은 -2 해서 적용한다고 하지만 아직 iOS10을 적용하지 않는 프로덕트들도 많이 있다. 이러한 현실에서 아무리 SwiftUI가 섹시해 보이더라도 프로덕트에 적용하지 못하는 그림의 떡이다. (물론 첫 버전이기 때문에 안정화 되기 위한 기간도 필요하지만..)</p>
+<p>그렇다면 현실적으로 iOS10 을 minSDK 버전으로 설정하고 리팩토링하고, iOS10의 변경된 사항을 충실히 반영하는 것이 현실적인 방법이 아닐까? 물론 새로운 기술이 나왔으니 팔로업은 해야겠지만,역시나 사실주의 프로그래머들에게는 (아직은) 피부로 와닿지 않는 얘기이다.</p>
+<p>그러니까 지금은 WWDC 2019를 볼 때가 아니라 <a target="_blank" rel="noopener" href="https://developer.apple.com/videos/wwdc2016/">WWDC 2016</a>을 볼 때라는 말이다.</p>
 
       
     </div>
@@ -148,7 +125,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/xcode11-iOS13-WWDC2019-SwiftUI/">xcode11, iOS13, WWDC2019, SwiftUI</a>
+        <a href="/tags/wwdc2019-wwdc2016-iOS13-iOS10/">wwdc2019, wwdc2016, iOS13, iOS10</a>
     </span>
     
 
@@ -159,7 +136,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2019/06/05/xcode11/#comment">Comments</a>
+          <a href="/2019/06/10/should-see-wwdc2016/#comment">Comments</a>
         </span>
       </span>
     </div>

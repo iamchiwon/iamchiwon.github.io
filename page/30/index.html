@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2018/10/01/currying-tip/"><span>커링의 활용 + 팁</span></a></h3>
+    <h3 class="article-title"><a href="/2018/10/09/youtube-start/"><span>유투브 채널을 개설하고야 말았네요</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2018/10/01/currying-tip/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-10-01T01:52:00.000Z">
-          2018-10-01
+      <a href="/2018/10/09/youtube-start/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-10-08T16:18:14.000Z">
+          2018-10-09
         </time>
       </a>
     </span>
@@ -103,25 +103,13 @@
   <div class="article-content">
     <div class="entry">
       
-        <blockquote>
-<p>이 내용은 <a target="_blank" rel="noopener" href="https://programmers.co.kr/learn/courses/4806">함수형 프로그래밍 강의</a> 에서 질문된 것에 대한 답변으로, 공유하면 좋을 내용이라 공개합니다.</p>
-</blockquote>
-<h2 id="Currying"><a href="#Currying" class="headerlink" title="Currying"></a>Currying</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f1</span>(<span class="keyword">_</span> <span class="params">a</span>:<span class="keyword">Any</span>, <span class="keyword">_</span> <span class="params">b</span>: <span class="keyword">Any</span>, <span class="keyword">_</span> <span class="params">c</span>: <span class="keyword">Any</span>)</span> -&gt; <span class="keyword">Any</span></span><br></pre></td></tr></table></figure>
-<p>이 함수를 커링하면</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f2</span>(<span class="keyword">_</span> <span class="params">a</span>:<span class="keyword">Any</span>)</span> -&gt; (<span class="keyword">Any</span>) -&gt; (<span class="keyword">Any</span>) -&gt; <span class="keyword">Any</span></span><br></pre></td></tr></table></figure>
-<p>가 됩니다.</p>
-<p>커링은 파라미터를 하나씩만 갖는 함수들로 쪼개는 것입니다.<br>당연히 <code>f1(1,2,3)</code> 의 결과나 <code>f2(1)(2)(3)</code>의 결과나 같아야 하겠죠.</p>
-<p>커링은 함수들의 합성을 용이하게도 해주지만, 하나의 함수를 다양하게 사용할 수 있도록 해주기도 합니다.</p>
-<p>예를 들어</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">request</span>(<span class="keyword">_</span> <span class="params">baseUrl</span>: <span class="type">String</span>,</span></span><br><span class="line"><span class="function">             <span class="keyword">_</span> <span class="params">method</span>: <span class="type">HttpMethod</span>,</span></span><br><span class="line"><span class="function">             <span class="keyword">_</span> <span class="params">path</span>: <span class="type">String</span>,</span></span><br><span class="line"><span class="function">             <span class="keyword">_</span> <span class="params">parameters</span>: [<span class="params">String</span>:<span class="keyword">Any</span>]<span class="operator">?</span>)</span> -&gt; <span class="type">HttpRequest</span></span><br></pre></td></tr></table></figure>
-<p>이러한 함수가 있다고 할 때 이것을 커링하면 이렇게 사용할 수 있습니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">request</span>(<span class="keyword">_</span> <span class="params">baseUrl</span>: <span class="type">String</span>)</span> -&gt; (<span class="type">HttpMethod</span>) -&gt; (<span class="type">String</span>) -&gt; ([String:<span class="keyword">Any</span>]<span class="operator">?</span>) -&gt; <span class="type">HttpRequest</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> oldApiRequest <span class="operator">=</span> request(<span class="string">&quot;legacy_api_server&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> newApiRequest <span class="operator">=</span> request(<span class="string">&quot;new_api_server&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> oldRequestGet <span class="operator">=</span> oldApiRequest(.get)</span><br><span class="line"><span class="keyword">let</span> oldRequestPost <span class="operator">=</span> oldApiRequest(.post)</span><br><span class="line"><span class="operator">...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//레거시 서버에 get 요청하기</span></span><br><span class="line"><span class="keyword">let</span> httpRequest <span class="operator">=</span> oldRequestGet(<span class="string">&quot;/list&quot;</span>)(<span class="literal">nil</span>)</span><br><span class="line"><span class="comment">//신규 서버에 post 요청하기</span></span><br><span class="line"><span class="keyword">let</span> httpRequest2 <span class="operator">=</span> newRequestPost(<span class="string">&quot;/post&quot;</span>)([<span class="string">&quot;param&quot;</span>:<span class="string">&quot;data&quot;</span>])</span><br></pre></td></tr></table></figure>
-<p>이렇게 하면 하나의 함수를 가지고 여러 용도의 함수를 만드는 것과 같은 효과를 낼 수 있습니다.</p>
-<blockquote>
-<p>이러한 부분을 습득하시고 난 후 커링을 고려해서 함수를 만들게 된다면 어떤 순서로 파라미터를 배치하는 것이 활용성에 좋을지를 고민하는 단계로 들어서게 될 겁니다.<br/><br>그리고 잘 설계된 소스들을 보면서 함수의 파라미터 순서까지 살펴보는 관점을 가질 수 있게 될 것입니다.</p>
-</blockquote>
-<h2 id="Currying-Tip"><a href="#Currying-Tip" class="headerlink" title="Currying Tip"></a>Currying Tip</h2><p>매번 커링된 함수를 새로 만들 필요 없이 커링시켜주는 함수를 따로 만들어 사용할 수도 있겠죠?</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">currying</span>&lt;<span class="type">A</span>,<span class="type">B</span>,<span class="type">C</span>,<span class="type">D</span>,<span class="type">E</span>&gt;(<span class="keyword">_</span> <span class="params">f</span>: <span class="keyword">@escaping</span> (<span class="type">A</span>, <span class="type">B</span>, <span class="type">C</span>, <span class="type">D</span>) -&gt; <span class="type">E</span>)</span> -&gt; (<span class="type">A</span>) -&gt; (<span class="type">B</span>) -&gt; (<span class="type">C</span>) -&gt; (<span class="type">D</span>) -&gt; <span class="type">E</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; a <span class="keyword">in</span> </span><br><span class="line">        <span class="keyword">return</span> &#123; b <span class="keyword">in</span> </span><br><span class="line">            <span class="keyword">return</span> &#123; c <span class="keyword">in</span> </span><br><span class="line">                <span class="keyword">return</span> &#123; d <span class="keyword">in</span> </span><br><span class="line">                    <span class="keyword">return</span> f(a, b, c, d)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">request</span>(<span class="keyword">_</span> <span class="params">baseUrl</span>: <span class="type">String</span>,</span></span><br><span class="line"><span class="function">             <span class="keyword">_</span> <span class="params">method</span>: <span class="type">HttpMethod</span>,</span></span><br><span class="line"><span class="function">             <span class="keyword">_</span> <span class="params">path</span>: <span class="type">String</span>,</span></span><br><span class="line"><span class="function">             <span class="keyword">_</span> <span class="params">parameters</span>: [<span class="params">String</span>:<span class="keyword">Any</span>]<span class="operator">?</span>)</span> -&gt; <span class="type">HttpRequest</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> oldApiRequest <span class="operator">=</span> currying(request)(<span class="string">&quot;legacy_api_server&quot;</span>)</span><br></pre></td></tr></table></figure>
+        <p><strong>(경)</strong> 곰튀김 유투브 채널 개설 <strong>(축)</strong></p>
+<p><strong>곰튀김</strong> 이름으로 유투브채널을 개설했습니다.</p>
+<p>프로그래밍관련 세미나, 강의, 라이브코딩, 팁 관련 영상을 올리려고 합니다… 만 (얼마나 갈지..)</p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCsrPur3UrxuwGmT1Jq6tkQw">https://www.youtube.com/channel/UCsrPur3UrxuwGmT1Jq6tkQw</a></p>
+<p>블로그는 개인적으로 남기는 성향이 강하다면 유투브는 보는 분들에게 도움이 되는 것을 남기려는 느낌이 강하게 드네요.</p>
+<p>잘해봅시다.</p>
+
       
     </div>
 
@@ -137,7 +125,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/FP-swift-Currying-Tip/">FP, swift, Currying, Tip</a>
+        <a href="/tags/youtube-programming/">youtube, programming</a>
     </span>
     
 
@@ -148,7 +136,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2018/10/01/currying-tip/#comment">Comments</a>
+          <a href="/2018/10/09/youtube-start/#comment">Comments</a>
         </span>
       </span>
     </div>

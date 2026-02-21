@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2018/10/24/letusgo2018fall/"><span>Advaned higher-order function</span></a></h3>
+    <h3 class="article-title"><a href="/2018/11/29/rxhasmore/"><span>Rx에겐 특별한 것이 있다.</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2018/10/24/letusgo2018fall/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-10-24T07:29:02.000Z">
-          2018-10-24
+      <a href="/2018/11/29/rxhasmore/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-11-29T05:30:21.000Z">
+          2018-11-29
         </time>
       </a>
     </span>
@@ -103,13 +103,19 @@
   <div class="article-content">
     <div class="entry">
       
-        <h4 id="let-us-Go-2018-가을-발표-자료"><a href="#let-us-Go-2018-가을-발표-자료" class="headerlink" title="let us: Go! 2018 가을 발표 자료"></a><a target="_blank" rel="noopener" href="https://www.slideshare.net/ChiwonSong/20181020-advanced-higherorder-function">let us: Go! 2018 가을 발표 자료</a></h4><iframe src="//www.slideshare.net/slideshow/embed_code/key/2A8iStmvP6ENQE" frameborder=0 marginwidth=0 marginheight=0 width=510 height=400 scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;"> </iframe>
-
+        <h4 id="Rx에-대해서-자주-듣는-질문"><a href="#Rx에-대해서-자주-듣는-질문" class="headerlink" title="Rx에 대해서 자주 듣는 질문"></a>Rx에 대해서 자주 듣는 질문</h4><ol>
+<li>Rx가 뭐하는 건가요?</li>
+<li>Rx를 쓰면 좋은가요?</li>
+</ol>
+<p>Rx에 대해서 처음 접하시는 분들이 여기 저기서 Rx를 얘기하니까 요즘 핫한 신기술인가보다. 해야 되는 건가보다. 남들 다 하니까 나도 해야겠다.. 이런 생각들을 하시는 것 같다. 그래서 위와 같은 질문들이 나오는 거라고 생각한다.<br>간단히 답하면 이렇다.</p>
 <ul>
-<li>슬라이드쉐어에 올라간 자료에서 서머리 페이지에 한글이 깨진것을 다 올리고 나서야 알았다!</li>
-<li><a href="/images/20181020advancedhigher-orderfunction-181020040354.pdf">pdf를 다운로드</a>해서 보자~</li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=HVRre-y1hnM&list=PL03rJBlpwTaD6HmnyeLW5Pv-nz2aEm-MS&index=3">발표영상</a>을 참고하자 ( <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=cXi_CmZuBgg&list=PL03rJBlpwTaD6HmnyeLW5Pv-nz2aEm-MS">이전 발표 영상들</a> )</li>
+<li>Rx 는 Utility 입니다. 편하려고 만든겁니다. 그래서 쓰면 분명히 좋습니다.</li>
+<li>Rx 는 비동기 처리를 위한 라이브러리 입니다.</li>
 </ul>
+<h4 id="Rx는-라이브러리"><a href="#Rx는-라이브러리" class="headerlink" title="Rx는 라이브러리"></a>Rx는 라이브러리</h4><p>Rx는 철학이나 아키텍처나 프레임워크가 아닙니다. 그냥 유틸리티 라이브러리 입니다. 그러니까 적용한다해도 쓰고 싶은 부분에 일부만 써도 상관없습니다. 왜 쓰는지, 왜 편해지는지만 알면 그냥 쓰면 됩니다.<br>뭔가 대단한거라고 생각하고 무리하게 적용부터 하려고 한다면 의미 없습니다.</p>
+<h4 id="Rx는-비동기-처리용"><a href="#Rx는-비동기-처리용" class="headerlink" title="Rx는 비동기 처리용"></a>Rx는 비동기 처리용</h4><p>Bolts, Promise, Task, Future 등을 써보신 분이라면 이미 Rx를 알고있는 것과 다를바 없습니다. 용도가 똑같기 때문입니다.<br>모른다 해도 비동기로 처리되어 생성된 결과를 depth를 높이지 않고 처리하게 해준다는 것은 모두 같습니다.</p>
+<h4 id="Rx에겐-뭔가-특별한-것이-있다"><a href="#Rx에겐-뭔가-특별한-것이-있다" class="headerlink" title="Rx에겐 뭔가 특별한 것이 있다."></a>Rx에겐 뭔가 특별한 것이 있다.</h4><p>위에서 언급한 라이브러리들과 용도나 동작은 같지만, Rx에는 뭔가 특별한 것이 있습니다. 바로 <code>Operator</code> 입니다.<br>Async하게 전달되는 데이터를 조작해서 사용하는 부분이 다른 비동기 유틸과 차별되는 부분이죠. 그리고 그 기능이 굉장히 다양하고 강력해서 이 부분을 어렵다고 느끼는 분들이 대다수 입니다.<br>사실 이 부분은 대충 어떠한 것들이 있는지 알고 나중에 필요할 때가 되면 적절한 것을 찾아낼 수만 있으면 됩니다. 그래서 <a target="_blank" rel="noopener" href="http://reactivex.io/documentation/operators.html">A Decision Tree of Observable Operators</a> 에서 가이드를 제공하고 있으니 참고하시면 됩니다.</p>
+<p>이렇게 놓고 보면 Rx는 전혀 어려울 것이 없습니다. 학습곡선이 높다는 주변의 말만 듣고 배우고 사용하는데 겁먹을 필요가 없습니다. 그러니 <strong>필요하면 쓰세요</strong></p>
 
       
     </div>
@@ -122,6 +128,13 @@
     
 
     
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/RxSwift-Reactive-Swift/">RxSwift, Reactive, Swift</a>
+    </span>
+    
 
     </div>
 
@@ -130,7 +143,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2018/10/24/letusgo2018fall/#comment">Comments</a>
+          <a href="/2018/11/29/rxhasmore/#comment">Comments</a>
         </span>
       </span>
     </div>

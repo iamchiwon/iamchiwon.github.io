@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2018/12/05/starting-rxswift2/"><span>쉽게 배우는 RxSwift (#2) - 비동기 작업</span></a></h3>
+    <h3 class="article-title"><a href="/2018/12/20/visit-toss/"><span>TOSS 방문기</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2018/12/05/starting-rxswift2/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-12-05T10:30:30.000Z">
-          2018-12-05
+      <a href="/2018/12/20/visit-toss/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-12-20T03:04:19.000Z">
+          2018-12-20
         </time>
       </a>
     </span>
@@ -103,39 +103,31 @@
   <div class="article-content">
     <div class="entry">
       
-        <h2 id="Rx의-용도"><a href="#Rx의-용도" class="headerlink" title="Rx의 용도"></a>Rx의 용도</h2><p>Rx는 어디에 적용해야 합니까? <code>비동기</code>처리 라이브러리니까 <code>비동기</code> 처리할 때 사용하면 됩니다.</p>
-<p>물론 동기 데이터도 RxSwift를 사용해서 비동기적으로 처리할 수 있지만, 그저 Rx를 쓰고싶다는 마음에 과용하는 것은 득될게 없습니다.</p>
-<h2 id="비동기-작업"><a href="#비동기-작업" class="headerlink" title="비동기 작업"></a>비동기 작업</h2><p>비동기 작업은 <em>동기적이지 않은 작업</em> 입니다. 동기적인 작업은 선행작업이 끝날때까지 기다렸다가 다음작업이 진행되는 것입니다. 그래서 비동기 작업은 선행작업이 끝나지 않아도 다음작업이 진행되는 것입니다.</p>
-<p>그래서 보통 시간이 오래걸리는 작업의 경우 - 예를들어 네트워크로부터 데이터를 다운로드 하는 경우 - 비동기로 처리하게 됩니다.</p>
-<p>비동기로 수행되는 작업은 수행후 결과를 콜백을 통해서 전달합니다. 그래서 호출하는 코드와 그 결과를 받아서 사용하는 부분이 코드가 분리되고 파편화 됩니다.</p>
-<p>비동기로 작업되는 경우 여러 작업이 동시에 처리되는 경우가 많기 때문에, 쓰레드로 나눠서 처리하게 됩니다. 그러다 보니 쓰레드 관리도 해줘야 합니다.</p>
-<p>여러 작업이 얽히거나 시나리오가 복잡해지면 매우 골치아파집니다.</p>
-<h2 id="비동기-라이브러리"><a href="#비동기-라이브러리" class="headerlink" title="비동기 라이브러리"></a>비동기 라이브러리</h2><p>이런 비동기 처리를 선형적으로 만들어 <a target="_blank" rel="noopener" href="http://callbackhell.com/">Callback-Hell</a> 애서 벗어나게 도와주는 라이브러리들이 있습니다. </p>
-<p>비교해 보시면 모두 사용 형태가 같다는 것을 알 수 있습니다.</p>
-<h3 id="1-PromiseKit"><a href="#1-PromiseKit" class="headerlink" title="1. PromiseKit"></a>1. <a target="_blank" rel="noopener" href="https://github.com/mxcl/PromiseKit">PromiseKit</a></h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">UIApplication</span>.shared.isNetworkActivityIndicatorVisible <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> fetchImage <span class="operator">=</span> <span class="type">URLSession</span>.shared.dataTask(.promise, with: url).compactMap&#123; <span class="type">UIImage</span>(data: <span class="variable">$0</span>.data) &#125;</span><br><span class="line"><span class="keyword">let</span> fetchLocation <span class="operator">=</span> <span class="type">CLLocationManager</span>.requestLocation().lastValue</span><br><span class="line"></span><br><span class="line">firstly &#123;</span><br><span class="line">    when(fulfilled: fetchImage, fetchLocation)</span><br><span class="line">&#125;.done &#123; image, location <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">self</span>.imageView.image <span class="operator">=</span> image</span><br><span class="line">    <span class="keyword">self</span>.label.text <span class="operator">=</span> <span class="string">&quot;<span class="subst">\(location)</span>&quot;</span></span><br><span class="line">&#125;.ensure &#123;</span><br><span class="line">    <span class="type">UIApplication</span>.shared.isNetworkActivityIndicatorVisible <span class="operator">=</span> <span class="literal">false</span></span><br><span class="line">&#125;.catch &#123; error <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">self</span>.show(<span class="type">UIAlertController</span>(for: error), sender: <span class="keyword">self</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="초대"><a href="#초대" class="headerlink" title="초대"></a>초대</h1><p>갑자기 뜬금없이 애니옵젝님의 초대+연화님의 낚시로 TOSS를 방문하게 되었습니다.</p>
+<p>우선 인증샷!</p>
+<p><img src="/images/20181220/toss_photo_1.jpg"></p>
+<p>역삼역 3번출구 바로 앞에 있는 큰 건물의 12층에 위치하고 있습니다.</p>
+<br/>
 
-<h3 id="2-BoltsFramework"><a href="#2-BoltsFramework" class="headerlink" title="2. BoltsFramework"></a>2. <a target="_blank" rel="noopener" href="https://github.com/BoltsFramework/Bolts-Swift">BoltsFramework</a></h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">save(object).continueWith &#123; task <span class="keyword">in</span> </span><br><span class="line">  <span class="keyword">if</span> task.cancelled &#123;</span><br><span class="line">    <span class="comment">// Save was cancelled</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> task.faulted &#123;</span><br><span class="line">    <span class="comment">// Save failed</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// Object was successfully saved</span></span><br><span class="line">    <span class="keyword">let</span> result <span class="operator">=</span> task.result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="저녁식사"><a href="#저녁식사" class="headerlink" title="저녁식사"></a>저녁식사</h1><p>애니옵젝님이 마법카드로 쏘는 저녁을 먹었습니다. 법카의 영향력으로 식사 내내 회사의 자랑을 들어야 했습니다. </p>
+<p>많은 얘기가 있었지만, 길어서 생략.. 결론은 좋은 회사, 더욱 더 성장할 회사 입니다.<br>지원은 여기로. <a target="_blank" rel="noopener" href="https://career.toss.im/">https://career.toss.im/</a></p>
+<br/>
 
-<h3 id="4-RxSwift"><a href="#4-RxSwift" class="headerlink" title="4. RxSwift"></a>4. <a target="_blank" rel="noopener" href="https://github.com/ReactiveX/RxSwift">RxSwift</a></h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">save(data)</span><br><span class="line">    .subscribe &#123; event <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">switch</span> event &#123;</span><br><span class="line">        <span class="keyword">case</span> .next(<span class="keyword">_</span>):</span><br><span class="line">            <span class="comment">//save sucess</span></span><br><span class="line">        <span class="keyword">case</span> .completed:</span><br><span class="line">            <span class="comment">//job completed</span></span><br><span class="line">        <span class="keyword">case</span> .error(<span class="keyword">_</span>):</span><br><span class="line">            <span class="comment">//job cancled with error</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="방문"><a href="#방문" class="headerlink" title="방문"></a>방문</h1><p>12층에 올라가면 로비와 TOSS 로고가. 안에는 커피숍이 맞아줍니다. 바리스타님의 커피를 얻어 먹고 사무실을 둘러 봅니다.</p>
+<p>사무실 중앙에 있는 계단으로 위층으로 올라가면, 독서실 열람식 같이 넓게 펼쳐진 공간, 한쪽에는 편의점을 옮겨놓은 탕비실 이 있습니다. 파노라마 사진 첨부합니다.</p>
+<p><img src="/images/20181220/toss_photo_2.jpg"><br><a href="/images/20181220/toss_photo_3.jpg">크게보기</a></p>
+<p>계획없이 방문한거라, 사진은 이게 전부 입니다.</p>
+<br/>
 
+<h1 id="대화"><a href="#대화" class="headerlink" title="대화"></a>대화</h1><p>한 쪽 방에 들어가서 소소한 대화를 나누었습니다.</p>
+<p>회사의 비전, 개발자의 미래, 심오한 기술의 세계, 지구환경, 세계평화.. 이런 주제는 없었구요, 정말 별 얘기 없었네요..</p>
+<p>애니옵젝님이 노란회사에서 토스로 옮기게 된 계기와 과정을 (중간에 대화가 자꾸 삼천포로 빠져서) 길게 들었고, 그냥 이직 얘기 입니다.</p>
+<p>회사를 옮기고 나서의 느낌은 규칙이 덜하고 더 자유롭지만, 전체가 맞물려 돌아가는 응집력은 훨씬 강하게 느낀다고 합니다. 아주 만족하고 즐겁게 일하고 있답니다.</p>
+<br/>
 
-<h2 id="RxSwfit"><a href="#RxSwfit" class="headerlink" title="RxSwfit"></a>RxSwfit</h2><p>이제 본격적으로 RxSwift 내용이 시작됩니다.</p>
-<ol>
-<li>비동기 데이터는 <code>Observable</code> 에 담겨 전달됩니다.</li>
-<li>이 데이터를 받아서 처리하는 것은 <code>subscribe</code> 에서 처리합니다.</li>
-<li>처리방식은 3가지가 있습니다.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.next : 데이터 전달</span><br><span class="line">.complted : 데이터 전달 끝</span><br><span class="line">.error : 오류 발생</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>가장 간단하게 <code>Observable</code> 을 만들 수 있는 것은 <code>just</code> 입니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">_</span> <span class="operator">=</span> <span class="type">Observable</span>.just(<span class="string">&quot;Hello World&quot;</span>)</span><br><span class="line">    .subscribe &#123; event <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">switch</span> event &#123;</span><br><span class="line">        <span class="keyword">case</span> .next(<span class="keyword">let</span> greeting):</span><br><span class="line">            <span class="built_in">print</span>(greeting)</span><br><span class="line">        <span class="keyword">case</span> .completed:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[completed]&quot;</span>)</span><br><span class="line">        <span class="keyword">case</span> .error(<span class="keyword">let</span> err):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[error: <span class="subst">\(err)</span>]&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Hello World</span></span><br><span class="line"><span class="comment">// [completed]</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>_ =  로 리턴값을 처리하는 것은 다음에 알아봅시다.</p>
-</blockquote>
-<p>이번에는 <code>just</code> 가 아니라 <code>from</code> 을 사용해 보갰습니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">_</span> <span class="operator">=</span> <span class="type">Observable</span>.from([<span class="string">&quot;Hello&quot;</span>, <span class="string">&quot;World&quot;</span>])</span><br><span class="line">    .subscribe &#123; event <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">switch</span> event &#123;</span><br><span class="line">        <span class="keyword">case</span> .next(<span class="keyword">let</span> greeting):</span><br><span class="line">            <span class="built_in">print</span>(greeting)</span><br><span class="line">        <span class="keyword">case</span> .completed:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[completed]&quot;</span>)</span><br><span class="line">        <span class="keyword">case</span> .error(<span class="keyword">let</span> err):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[error: <span class="subst">\(err)</span>]&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Hello</span></span><br><span class="line"><span class="comment">// World</span></span><br><span class="line"><span class="comment">// [completed]</span></span><br></pre></td></tr></table></figure>
-
-<p>결과를 보니 <code>from</code> 에서 array 로 입력값을 주니까 하나씩 전달되고 맨 끝에 <strong>completed</strong> 가 되는 것을 볼 수 있습니다.</p>
-<p>이렇게 <code>Observable</code> 이 전달하는 데이터를 순차적으로 받아서 <code>subscribe</code> 에서 처리하하고 데이터가 다 끝나면 <strong>completed</strong> 가 되는 기본 동작을 알아봤습니다.</p>
+<h1 id="후기"><a href="#후기" class="headerlink" title="후기"></a>후기</h1><p>방문을 한 번 하고나니, 다른 회사들도 방문을 하면서 기록을 남기는 것도 재밌겠다 싶은 생각이 드네요. 그래서 이제는 계획을 세우고, 인터뷰 준비도 해서 다른 회사들 방문을 해보고 싶다 라는 생각이 들었습니다.</p>
+<p>일상을 기록하지 않는 초보 <a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCsrPur3UrxuwGmT1Jq6tkQw">유튜버</a>이다보니 영상은 커녕 사진찍을 생각을 못했는데, 유튜브 시리즈 컨텐츠로 방문기를 만드는 것도 재밌겠다는 생각을 했습니다.</p>
+<p>다 쓰고 나니 진짜 별 내용 없네요.. 쩝~</p>
 
       
     </div>
@@ -152,7 +144,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/Rx-RxSwift-Starter-Async/">Rx, RxSwift, Starter, Async</a>
+        <a href="/tags/visit-toss-rx-연화-애니옵젝/">visit, toss, rx, 연화, 애니옵젝</a>
     </span>
     
 
@@ -163,7 +155,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2018/12/05/starting-rxswift2/#comment">Comments</a>
+          <a href="/2018/12/20/visit-toss/#comment">Comments</a>
         </span>
       </span>
     </div>

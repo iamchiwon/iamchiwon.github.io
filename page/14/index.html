@@ -83,15 +83,15 @@
 
   
     
-    <h3 class="article-title"><a href="/2020/06/02/signinwithapple-rx/"><span> Sign in with Apple + Rx</span></a></h3>
+    <h3 class="article-title"><a href="/2020/08/27/main-thought-of-clean-architecture/"><span>클린 아키텍쳐의 핵심 아이디어</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2020/06/02/signinwithapple-rx/" rel="bookmark">
-        <time class="entry-date published" datetime="2020-06-02T07:32:12.000Z">
-          2020-06-02
+      <a href="/2020/08/27/main-thought-of-clean-architecture/" rel="bookmark">
+        <time class="entry-date published" datetime="2020-08-27T10:33:29.000Z">
+          2020-08-27
         </time>
       </a>
     </span>
@@ -103,30 +103,45 @@
   <div class="article-content">
     <div class="entry">
       
-        <p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm7erlIt6GTqyc7onXaM3LpGhCDqYvtJlRmn9nNtgV_yTvqqUI&usqp=CAU" alt="Sign in with Apple"></p>
-<p>Apple의 심사지침 “4.8 Apple로 로그인” 항목에 의해서 소셜 로그인 서비스를 사용하는 앱은 Apple로 로그인 기능을 동등한 옵션으로 제공해야 합니다.</p>
-<p>그리고 이 옵션은 2020년 4월중으로 적용하라고 했었습니다.</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://developer.apple.com/kr/news/?id=09122019b">https://developer.apple.com/kr/news/?id=09122019b</a></li>
-<li><a target="_blank" rel="noopener" href="https://developer.apple.com/kr/news/?id=03042020d">https://developer.apple.com/kr/news/?id=03042020d</a></li>
-</ul>
-<p>그리고 다시 6월 말 까지로 연장되었죠.</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://developer.apple.com/kr/news/?id=03262020b">https://developer.apple.com/kr/news/?id=03262020b</a></li>
-</ul>
-<p>그동안 미뤄왔던 이제 애플로그인을 적용할 때가 됐네요..<br>레퍼런스는 이미 많기 때문에 적용하는데 어려움은 없습니다.<br>근데, 이걸 Rx로 적용해서 하려고 찾아보니 의외로 없네요.</p>
-<p>그래서 하나 만들었습니다.<br>라이브러리로 만들까도 했지만 코드 몇 줄 넣으면 되는 일이라 번거롭게 하지 않았습니다.</p>
-<hr>
-<p>소스코드는 Gist로 공유합니다.<br><a target="_blank" rel="noopener" href="https://gist.github.com/iamchiwon/20aa57d4e8f6110bc3f79742c2fb6cc5">https://gist.github.com/iamchiwon/20aa57d4e8f6110bc3f79742c2fb6cc5</a></p>
-<p>Apple Login 에 Rx를 적용하면<br>이렇게 됩니다.</p>
-<p>(1) ASAuthorizationAppleIDButton 를 사용하는 경우</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">appleLoginButton.rx</span><br><span class="line">    .loginOnTap(scope: [.fullName, .email])</span><br><span class="line">    .subscribe(onNext: &#123; result <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> auth <span class="operator">=</span> result.credential <span class="keyword">as?</span> <span class="type">ASAuthorizationAppleIDCredential</span> <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">        <span class="built_in">print</span>(auth.user)</span><br><span class="line">        <span class="built_in">print</span>(auth.email)</span><br><span class="line">        <span class="built_in">print</span>(auth.fullName<span class="operator">?</span>.givenName)</span><br><span class="line">        <span class="built_in">print</span>(auth.fullName<span class="operator">?</span>.familyName)</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
-
-<p>(2) CustomButton 을 사용하는 경우</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">customButton.rx.tap</span><br><span class="line">    .map &#123; <span class="keyword">_</span> <span class="keyword">in</span> <span class="type">ASAuthorizationAppleIDProvider</span>() &#125;</span><br><span class="line">    .flatMap &#123; <span class="variable">$0</span>.rx.login(scope: [.fullName, .email], on: customButton.window<span class="operator">!</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    .subscribe(onNext: &#123; result <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> auth <span class="operator">=</span> result.credential <span class="keyword">as?</span> <span class="type">ASAuthorizationAppleIDCredential</span> <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">        <span class="built_in">print</span>(auth.user)</span><br><span class="line">        <span class="built_in">print</span>(auth.email)</span><br><span class="line">        <span class="built_in">print</span>(auth.fullName<span class="operator">?</span>.givenName)</span><br><span class="line">        <span class="built_in">print</span>(auth.fullName<span class="operator">?</span>.familyName)</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
-
+        <p><img src="/images/clean_architecture.jpg" alt="clean architecture"></p>
 <br/>
-행복하시길..
+
+<p>밥 아저씨의 클린 아키텍쳐에 대한 아이디어가 공유된 이후 많은 분들이 여기에 관심을 가지고 있고, 각자 나름대로 해석한 설명을 공유하고 있습니다. 구현한 예도 많이 있죠.</p>
+<p>최근 아키텍쳐에 대해서 여러 분들과 얘기를 하면서 느낀것은 아키텍쳐에 대해서 이해가 많지 않다는 아쉬움과 클린아키텍쳐에 대해서도 명확한 개념을 갖고 있지 못하다는 점이다.</p>
+<blockquote>
+<p>클린 아키텍쳐는 “깨끗한” 아키텍쳐가 아니다. 엉클밥이 제안하는 여러 아이디어들에 대한 브랜드 네임이다.</p>
+</blockquote>
+<br/>
+
+<h2 id="아키텍쳐가-무엇이냐"><a href="#아키텍쳐가-무엇이냐" class="headerlink" title="아키텍쳐가 무엇이냐?"></a>아키텍쳐가 무엇이냐?</h2><p>우리는 플랫폼과 프레임워크에서 제공되는 여러 기능들을 사용해서 응용 어플리케이션을 만들고 있다.<br>예를들어 흔히들 만드는 ToDo 앱을 iOS용으로 만든다고 하면, 극단적으로 TodoViewController 하나만으로 모든 서비스를 다 만들 수 있다. 또 다른 방법으로는 View, ViewModel, Controller, Model 등등으로 여러 레이어를 만들고 코드를 나눠서 만들 수도 있다.</p>
+<p>서비스를 만드는 관점에서 보면 어떤방식으로 만들더라도 상관 없다. 그럼 왜 코드를 분리해서 만들어야 하느냐? 나눈다면 어떤구성으로 어떻게 나누는 것이 좋은냐? 하는 것이 아키텍쳐를 이해하는 올바른 접근이라고 생각한다.</p>
+<p>우리가 만드는 서비스는 한 번 만들고 끝이 아니다. 계속 기능이 추가/삭제되고 끊임없이 변경되어간다. 또 여럿이 같이 만들기도 하고, 만들던 사람이 나가고 새로운 사람이 그 자리를 채워서 이어서 개발하기도 한다. 이런 상황에서 서비스를 잘 관리할 수 있으려면 한 덩어리로 뭉쳐있는 코드보다는 기능별로 여럿으로 나눠져 있는 것이 편할 것이다. 이것이 “왜 코드를 나누는가?”에 대한 답변이다.</p>
+<p>다음 어떻게 나눠야 하는가? 에 대한 답이 바로 아키텍쳐이다. 어떤 기준으로 나누고, 어떻게 구성해야 하는가. 즉, 코드를 어떻게 <code>배치</code>할 것인가 하는 답이 아키텍쳐이다. 어떤 아키텍쳐를 선택하느냐에 따라서 코드를 나누고 배치하는 기준이 달라질 것이다.</p>
+<blockquote>
+<p>아키텍쳐는 코드의 <strong>배치</strong>에 대한 얘기이다.</p>
+</blockquote>
+<br/>
+
+<h2 id="클린아키텍쳐는-무엇을-제시하는가"><a href="#클린아키텍쳐는-무엇을-제시하는가" class="headerlink" title="클린아키텍쳐는 무엇을 제시하는가?"></a>클린아키텍쳐는 무엇을 제시하는가?</h2><p>여러 아키텍쳐 모델들이 있다. 그 중에서 엉클밥이 제시한 클린아키텍쳐가 많이 회자되는 것은 그것이 제시하는 방식이 적당하겠다고 많은 개발자들이 공감하기 때문일 것이다.<br>그럼 클린아키텍쳐가 제시하는 <strong>핵심 아이디어</strong>에 대해서 올바르게 알아야 할 것이다.</p>
+<p>클린아키텍쳐에 여러 용어들이 나온다. Entity, Usecase, Controller 등이다. 그런데 이런 구성의 요소들이 클린아키텍쳐가 말하고자하는 주요 아이디어가 아니다. 클린아키텍쳐가 말하는 주요 아이디어는</p>
+<ol>
+<li>프로그램을 구성하는데는 이러한 요소들이 있고,</li>
+<li>그것들은 레이어로 나뉘어 있어야 한다.</li>
+<li>레이어들은 비지니스에 가까운가와 플랫폼에 가까운가를 기준으로 구분한다.</li>
+<li>각 레이어 사이에는 인터페이스 분리되어 있어야 한다.</li>
+<li>그리고 사용에 대한 방향은 한쪽으로만 흘러야 한다.</li>
+</ol>
+<p>라는 것이다. 아주 단순하지만 명쾌한 아이디어다. 그리고 기준과 아이디어만으로 구성된 이론이기 때문에 어떤 프로그램에도 적용할 수 있다.</p>
+<br/>
+
+<h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2><p>클린아키텍쳐를 적용한다 라는 것은 이 핵심 아이디어를 따른 다는 뜻이다. Entity, Usecase 같이 예시로 제시한 그런 용어에 매몰되서 이게 맞네 아니네, 이건 이름을 이것으로 지어야 하네.. 그런 논쟁을 하는 것은 아무런 의미가 없다.</p>
+<p>또 당연히, 지금의 아키텍쳐가 클린아키텍쳐를 따르는가를 평가하는 기준에도 역시 그 핵심 아이디어를 따르는 것만 확인하면 된다.</p>
+<blockquote>
+<p>뭣이 중요한지 잘 판단하자.</p>
+</blockquote>
+<br/>
+
+<p>끝.</p>
 
       
     </div>
@@ -139,6 +154,13 @@
     
 
     
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/clean-architecture/">clean, architecture</a>
+    </span>
+    
 
     </div>
 
@@ -147,7 +169,7 @@
       <span>
         <i class="icon-comments"></i>
         <span>
-          <a href="/2020/06/02/signinwithapple-rx/#comment">Comments</a>
+          <a href="/2020/08/27/main-thought-of-clean-architecture/#comment">Comments</a>
         </span>
       </span>
     </div>
